@@ -9,6 +9,28 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/titlescool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|top"
+            android:text="iFunny.DL"
+            android:textColor="#0A142C"
+            android:textSize="54sp" />
+        <TextView
+            android:id="@+id/explain"
+            android:layout_below="@id/titlescool"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center_horizontal|top"
+            android:text="Share iFunny link to this app to quickly download video."
+            android:textColor="#39445F"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="450dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -46,15 +68,6 @@
         android:textSize="12sp"
         android:gravity="center_horizontal|bottom"
         android:layout_alignParentBottom="true" />
-
-        <TextView
-            android:id="@+id/titlescool"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:gravity="center_horizontal|top"
-            android:text="iFunny.DL"
-            android:textColor="#0A142C"
-            android:textSize="54sp" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

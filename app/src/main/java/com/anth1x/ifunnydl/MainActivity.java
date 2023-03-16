@@ -49,22 +49,21 @@ public class MainActivity extends AppCompatActivity {
         Button sendButton = findViewById(R.id.sendButton);
         TextView titlescool = findViewById(R.id.titlescool);
         TextView footer = findViewById(R.id.footer);
+        TextView explain = findViewById(R.id.explain);
 
 //        Fonts
         Typeface fontPorter = Typeface.createFromAsset(getAssets(), "fonts/Porter.ttf");
         Typeface fontNexa = Typeface.createFromAsset(getAssets(), "fonts/nexaheavy.ttf");
-        Typeface bebas = Typeface.createFromAsset(getAssets(), "fonts/bebas.ttf");
+        Typeface fontBebas = Typeface.createFromAsset(getAssets(), "fonts/bebas.ttf");
+        Typeface fontTheBoldFont = Typeface.createFromAsset(getAssets(), "fonts/tboldfont.ttf");
 
 //        Further Styling
         sendButton.setTypeface(fontPorter);
-        titlescool.setTypeface(fontNexa);
-        footer.setTypeface(bebas);
-
+        titlescool.setTypeface(fontTheBoldFont);
+        footer.setTypeface(fontBebas);
+        explain.setTypeface(fontNexa);
 
         Objects.requireNonNull(getSupportActionBar()).hide();
-
-
-
 
 //      Opened intent
         Intent intent = getIntent();
