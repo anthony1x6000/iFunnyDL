@@ -30,8 +30,8 @@ jobs:
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: app-release.apk
-          path: app/build/outputs/apk/release/app-release.apk
+          name: iFunnyDL.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
 
   upload-release:
     needs: build
@@ -41,9 +41,9 @@ jobs:
       - name: Download APK artifact
         uses: actions/download-artifact@v2
         with:
-          name: app-release.apk
+          name: iFunnyDL.apk
 
       - name: Upload APK to release
         uses: softprops/action-gh-release@v1
         with:
-          files: app-release.apk
+          files: iFunnyDL-release.apk
