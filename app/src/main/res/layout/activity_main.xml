@@ -41,7 +41,7 @@
         android:id="@+id/footer"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:text="anthony1x6000 @ GitHub \n github.com/anthony1x6000/iFunnyDL"
+        android:text="github.com/anthony1x6000/iFunnyDL\nanthonyonline.cf"
         android:textColor="#829CD7"
         android:textSize="12sp"
         android:gravity="center_horizontal|bottom"
