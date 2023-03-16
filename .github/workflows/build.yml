@@ -53,3 +53,16 @@ jobs:
           asset_path: iFunnyDL-${{ steps.current-date.outputs.date }}.apk
           asset_name: iFunnyDL-${{ steps.current-date.outputs.date }}.apk
           asset_content_type: application/vnd.android.package-archive
+
+      - name: Release APK
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: |
+            iFunnyDL-${{ steps.current-date.outputs.date }}.apk
+          body: " \n\nDownload ``iFunnyDL-${{ steps.current-date.outputs.date }}.apk`` and install it on your android device. Share an iFunny post to it or paste into box and it'll download it to Pictures/iFunnyDL.
+          append_body: true
+          draft: false
+          prerelease: false
+        if: github.event_name == 'release'
