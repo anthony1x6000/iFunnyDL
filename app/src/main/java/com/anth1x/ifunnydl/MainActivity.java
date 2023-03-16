@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
             sendButton.setOnClickListener(view -> {
                 initShare = inputURL.getText().toString();
-                if (!initShare.isEmpty() && initShare.contains("http")) {
+                if (!initShare.isEmpty() && initShare.contains("ifunny")) {
                     System.out.println("Send initshare = " + initShare);
                     startDLService(initShare);
                     finishAndRemoveTask();
