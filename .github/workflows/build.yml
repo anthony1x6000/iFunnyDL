@@ -8,6 +8,9 @@ on:
     types: [created]
   workflow_dispatch:
 
+env:
+  CURRENT_DATE: ${{ steps.current-date.outputs.date }}  
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,23 +30,22 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+      - name: Move + Rename APK
+        run: mv app/build/outputs/apk/debug/app-debug.apk iFunnyDL-$CURRENT_DATE.apk
+
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: iFunnyDL.apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: iFunnyDLAPK
+          path: iFunnyDL-$CURRENT_DATE.apk
 
   upload-release:
     needs: build
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
     steps:
-      - name: Download APK artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: iFunnyDL.apk
 
       - name: Upload APK to release
         uses: softprops/action-gh-release@v1
         with:
-          files: iFunnyDL-release.apk
+          files: iFunnyDL-$CURRENT_DATE.apk
