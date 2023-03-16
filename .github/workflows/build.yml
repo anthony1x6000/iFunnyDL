@@ -43,17 +43,6 @@ jobs:
           name: iFunnyDLzip
           path: iFunnyDL-${{ steps.current-date.outputs.date }}.apk
 
-      - name: Upload APK to release
-        if: github.event_name == 'release'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: iFunnyDL-${{ steps.current-date.outputs.date }}.apk
-          asset_name: iFunnyDL-${{ steps.current-date.outputs.date }}.apk
-          asset_content_type: application/vnd.android.package-archive
-
       - name: Release APK
         uses: softprops/action-gh-release@v1
         env:
