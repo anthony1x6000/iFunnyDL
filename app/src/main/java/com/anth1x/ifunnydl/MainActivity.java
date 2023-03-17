@@ -1,12 +1,12 @@
 package com.anth1x.ifunnydl;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -15,9 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     public int getNavigationBarHeight() {
         int result = 0;
-        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        @SuppressLint({"InternalInsetResource", "DiscouragedApi"}) int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
         if (resourceId > 0) {
             result = getResources().getDimensionPixelSize(resourceId);
         }
@@ -35,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public int getStatusBarHeight() {
         int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        @SuppressLint({"InternalInsetResource", "DiscouragedApi"}) int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
             result = getResources().getDimensionPixelSize(resourceId);
         }
@@ -86,10 +84,6 @@ public class MainActivity extends AppCompatActivity {
         int backgroundColor = Color.argb((int) (0.65 * 255), 86, 102, 162);
         sendButton.setBackgroundColor(backgroundColor);
         Objects.requireNonNull(getSupportActionBar()).hide();
-////      Hide status bar
-//        View decorView = getWindow().getDecorView();
-//        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-//        decorView.setSystemUiVisibility(uiOptions);
 
         String currentText = footer.getText().toString();
         Date buildDate = new Date(BuildConfig.BUILD_TIME);
