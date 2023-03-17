@@ -69,10 +69,10 @@ public class MainActivity extends AppCompatActivity {
         int backgroundColor = Color.argb((int) (0.65 * 255), 86, 102, 162);
         sendButton.setBackgroundColor(backgroundColor);
         Objects.requireNonNull(getSupportActionBar()).hide();
-//      Hide status bar
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
+////      Hide status bar
+//        View decorView = getWindow().getDecorView();
+//        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+//        decorView.setSystemUiVisibility(uiOptions);
 
         String currentText = footer.getText().toString();
         Date buildDate = new Date(BuildConfig.BUILD_TIME);
