@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -24,6 +25,22 @@ public class MainActivity extends AppCompatActivity {
     private String initShare;
     private static final int REQUEST_CODE = 1;
 
+    public int getNavigationBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -69,10 +86,10 @@ public class MainActivity extends AppCompatActivity {
         int backgroundColor = Color.argb((int) (0.65 * 255), 86, 102, 162);
         sendButton.setBackgroundColor(backgroundColor);
         Objects.requireNonNull(getSupportActionBar()).hide();
-//      Hide status bar
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
+////      Hide status bar
+//        View decorView = getWindow().getDecorView();
+//        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+//        decorView.setSystemUiVisibility(uiOptions);
 
         String currentText = footer.getText().toString();
         Date buildDate = new Date(BuildConfig.BUILD_TIME);
@@ -80,6 +97,13 @@ public class MainActivity extends AppCompatActivity {
         String newText = currentText + " - Build Version: " + unixTime;
         footer.setText(newText);
 
+//        Status and nav bar stuff
+        int statusBarHeight = getStatusBarHeight();
+        int navigationBarHeight = getNavigationBarHeight();
+
+        ConstraintLayout layout = findViewById(R.id.appbody);
+        layout.setPadding(0, statusBarHeight, 0, navigationBarHeight);
+        
 //      Opened intent
         Intent intent = getIntent();
         String action = intent.getAction();
