@@ -7,3 +7,4 @@ Might make compatible with images along with cropping out iFunny watermark but t
 
 ## Compatibility
 Verified compatibility with Android 10+
+Verified Android 6 download, not sure if sharing works. 
