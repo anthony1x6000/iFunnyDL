@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
         ConstraintLayout layout = findViewById(R.id.appbody);
         layout.setPadding(0, statusBarHeight, 0, navigationBarHeight);
-        
+
 //      Opened intent
         Intent intent = getIntent();
         String action = intent.getAction();
