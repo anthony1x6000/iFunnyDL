@@ -4,13 +4,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowInsets;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,9 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.OnApplyWindowInsetsListener;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 1;
     private int getStatusBarHeight() {
         int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        @SuppressLint({"InternalInsetResource", "DiscouragedApi"}) int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
             result = getResources().getDimensionPixelSize(resourceId);
         }
@@ -42,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int getNavigationBarHeight() {
         int result = 0;
-        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        @SuppressLint({"InternalInsetResource", "DiscouragedApi"}) int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
         if (resourceId > 0) {
             result = getResources().getDimensionPixelSize(resourceId);
         }
@@ -68,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
                     permissionsToRequest.toArray(new String[0]),
                     REQUEST_CODE);
         }
+        TextView gotosettings = findViewById(R.id.gotosettings);
+        gotosettings.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
+        });
 
 //        !!Styling!!
 //        Elements
@@ -86,9 +84,10 @@ public class MainActivity extends AppCompatActivity {
         sendButton.setTypeface(fontPorter);
         titlescool.setTypeface(fontTheBoldFont);
         footer.setTypeface(fontBebas);
+        gotosettings.setTypeface(fontBebas);
         explain.setTypeface(fontNexa);
-        int backgroundColor = Color.argb((int) (0.65 * 255), 86, 102, 162);
-        sendButton.setBackgroundColor(backgroundColor);
+        int sendButtBackgroundColor = Color.argb((int) (0.65 * 255), 86, 102, 162);
+        sendButton.setBackgroundColor(sendButtBackgroundColor);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         String currentText = footer.getText().toString();

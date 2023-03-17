@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back"
-    tools:context=".MainActivity"
     android:id="@+id/appbody">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|top"
-            android:text="Share iFunny post link to this app to quickly download video."
+            android:text="Settings"
             android:textColor="#39445F"
             android:textSize="15sp" />
     </RelativeLayout>
@@ -45,14 +43,15 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.1">
+            android:layout_weight="0.5">
 
             <EditText
-                android:id="@+id/inputURL"
+                android:id="@+id/inputFileName"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:background="@drawable/input"
                 android:ems="10"
+                android:text="Change file ending (-{iFunny}.mp4)"
                 android:inputType="textPersonName"
                 android:textColor="#000" />
 
@@ -61,24 +60,32 @@
                 android:textColor="#fff"
                 android:id="@+id/sendButton"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_below="@id/inputURL"
-                android:text="DOWNLOAD" />
+                android:layout_height="35dp"
+                android:layout_below="@id/inputFileName"
+                android:text="Apply" />
+
+            <TextView
+                android:gravity="center"
+                android:textColor="#fff"
+                android:id="@+id/changeNotifPref"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/sendButton"
+                android:text="Press to modify download notifications" />
 
         </RelativeLayout>
 
     </LinearLayout>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
-            android:id="@+id/gotosettings"
+            android:id="@+id/gotocute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/footer"
-            android:text="Settings"
+            android:text="Cute"
             android:gravity="center_horizontal|top"
             android:textColor="#829CD7"
             android:textSize="12sp"
