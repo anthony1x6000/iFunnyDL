@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:gravity="center_horizontal|top"
-            android:text="Share iFunny link to this app to quickly download video."
+            android:text="Share iFunny post link to this app to quickly download video."
             android:textColor="#39445F"
             android:textSize="15sp" />
     </RelativeLayout>
