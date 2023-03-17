@@ -8,3 +8,8 @@ Might make compatible with images along with cropping out iFunny watermark but t
 ## Compatibility
 Verified compatibility with Android 6, 10, 13. 
 Should work 100% with Android 10+ 
+
+## Usage
+Download the APK, install it, \
+Then play this video. \
+<a href="https://imgur.com/KhgcT8b"><img src="https://i.imgur.com/2Esfo4m.png" /></a>
