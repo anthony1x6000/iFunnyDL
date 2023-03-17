@@ -85,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/footer"
-            android:text="Cute"
+            android:text="😭"
             android:gravity="center_horizontal|top"
             android:textColor="#829CD7"
             android:textSize="12sp"
