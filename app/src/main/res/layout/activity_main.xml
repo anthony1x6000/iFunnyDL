@@ -29,33 +29,43 @@
             android:textSize="15sp" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="450dp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/inputURL"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:background="@drawable/input"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textColor="#000" />
+            android:layout_height="0dp"
+            android:layout_weight="0.1" />
 
-        <Button
-            android:id="@+id/sendButton"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_below="@id/inputURL"
-            android:background="@drawable/input"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:text="DOWNLOAD" />
+            android:layout_height="0dp"
+            android:layout_weight="0.1">
 
-    </RelativeLayout>
+            <EditText
+                android:id="@+id/inputURL"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:background="@drawable/input"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textColor="#000" />
+
+            <Button
+                android:id="@+id/sendButton"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/inputURL"
+                android:background="@drawable/input"
+                android:text="DOWNLOAD" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
