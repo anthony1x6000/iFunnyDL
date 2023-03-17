@@ -6,5 +6,5 @@ The format for the video downloads is {Current Unix time}-iFunny.mp4
 Might make compatible with images along with cropping out iFunny watermark but that's hard to do. But right now, this app does not support image downloads. 
 
 ## Compatibility
-Verified compatibility with Android 10+
-Verified Android 6 download, not sure if sharing works. 
+Verified compatibility with Android 6, 10, 13. 
+Should work 100% with Android 10+ 
