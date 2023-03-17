@@ -59,18 +59,22 @@ public class DownloadService extends IntentService {
         String finalURL = parseLink(initShare);
         System.out.println("handLing intent");
         System.out.println("finalURL = " + finalURL);
-        try {
-            Document doc = Jsoup.connect(finalURL).timeout(10*1000).get();
+        if (finalURL != null) {
+            try {
+                Document doc = Jsoup.connect(finalURL).timeout(10 * 1000).get();
 
-            Element vidLink = doc.select("video[data-src~=(?i)\\.mp4]").first();
-            if (vidLink != null) {
-                String mediaRL = vidLink.attr("data-src");
-                System.out.println(mediaRL);
-                downloadWith(mediaRL);
+                Element vidLink = doc.select("video[data-src~=(?i)\\.mp4]").first();
+                if (vidLink != null) {
+                    String mediaRL = vidLink.attr("data-src");
+                    System.out.println(mediaRL);
+                    downloadWith(mediaRL);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            System.out.println("URL is " + finalURL + " | Probably null.");
         }
     }
 }
