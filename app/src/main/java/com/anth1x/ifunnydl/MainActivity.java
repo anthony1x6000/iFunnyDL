@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.View;
+import android.view.WindowInsets;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -15,6 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.OnApplyWindowInsetsListener;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,23 +31,22 @@ public class MainActivity extends AppCompatActivity {
 
     private String initShare;
     private static final int REQUEST_CODE = 1;
-
-    public int getNavigationBarHeight() {
+    private int getStatusBarHeight() {
         int result = 0;
-        @SuppressLint({"InternalInsetResource", "DiscouragedApi"}) int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
             result = getResources().getDimensionPixelSize(resourceId);
         }
         return result;
     }
-    public int getStatusBarHeight() {
-        Resources resources = getResources();
-        @SuppressLint({"InternalInsetResource", "DiscouragedApi"}) int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-        int statusBarHeight = 0;
+
+    private int getNavigationBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            statusBarHeight = resources.getDimensionPixelSize(resourceId);
+            result = getResources().getDimensionPixelSize(resourceId);
         }
-        return statusBarHeight;
+        return result;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +98,9 @@ public class MainActivity extends AppCompatActivity {
         footer.setText(newText);
 
 //        Status and nav bar stuff
+        ConstraintLayout layout = findViewById(R.id.appbody);
         int statusBarHeight = getStatusBarHeight();
         int navigationBarHeight = getNavigationBarHeight();
-
-        ConstraintLayout layout = findViewById(R.id.appbody);
         layout.setPadding(0, statusBarHeight, 0, navigationBarHeight);
 
 //      Opened intent
