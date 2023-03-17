@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -77,10 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
         String currentText = footer.getText().toString();
         Date buildDate = new Date(BuildConfig.BUILD_TIME);
-        String buildDateString = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(buildDate);
-        String newText = currentText + " - Version " + buildDateString;
+        long unixTime = buildDate.getTime() / 1000;
+        String newText = currentText + " - Build Version: " + unixTime;
         footer.setText(newText);
-
 
 //      Opened intent
         Intent intent = getIntent();
