@@ -3,7 +3,7 @@
     <style name="Theme.IFUNNYDL" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#8DA4FE</item>
-        <item name="colorPrimaryDark">#6D83DA</item>
+        <item name="colorPrimaryDark">#58638F</item>
         <item name="colorAccent">#BECDF3</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
