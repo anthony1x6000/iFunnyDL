@@ -53,12 +53,13 @@
                 android:inputType="textPersonName"
                 android:textColor="#000" />
 
-            <Button
+            <TextView
+                android:gravity="center"
+                android:textColor="#fff"
                 android:id="@+id/sendButton"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_below="@id/inputURL"
-                android:background="@drawable/input"
                 android:text="DOWNLOAD" />
 
         </RelativeLayout>

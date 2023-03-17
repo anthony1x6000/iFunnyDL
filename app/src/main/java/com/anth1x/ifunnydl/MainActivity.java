@@ -3,8 +3,10 @@ package com.anth1x.ifunnydl;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        !!Styling!!
 //        Elements
-        Button sendButton = findViewById(R.id.sendButton);
+        TextView sendButton = findViewById(R.id.sendButton);
         TextView titlescool = findViewById(R.id.titlescool);
         TextView footer = findViewById(R.id.footer);
         TextView explain = findViewById(R.id.explain);
@@ -62,8 +67,20 @@ public class MainActivity extends AppCompatActivity {
         titlescool.setTypeface(fontTheBoldFont);
         footer.setTypeface(fontBebas);
         explain.setTypeface(fontNexa);
-
+        int backgroundColor = Color.argb((int) (0.65 * 255), 86, 102, 162);
+        sendButton.setBackgroundColor(backgroundColor);
         Objects.requireNonNull(getSupportActionBar()).hide();
+//      Hide status bar
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
+        String currentText = footer.getText().toString();
+        Date buildDate = new Date(BuildConfig.BUILD_TIME);
+        String buildDateString = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(buildDate);
+        String newText = currentText + " - Version " + buildDateString;
+        footer.setText(newText);
+
 
 //      Opened intent
         Intent intent = getIntent();
