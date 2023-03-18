@@ -1,10 +1,11 @@
 package com.anth1x.ifunnydl;
 
+import static com.anth1x.ifunnydl.fonts.*;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.EditText;
@@ -12,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -46,9 +46,9 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        fonts.init(this);
 
-
-//        Elements
+//      Elements
         TextView sendButton = findViewById(R.id.sendButton);
         TextView titlescool = findViewById(R.id.titlescool);
         TextView explain = findViewById(R.id.explain);
@@ -124,26 +124,19 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 //        !!Styling!!
-//        Fonts
-        Typeface fontPorter = Typeface.createFromAsset(getAssets(), "fonts/Porter.ttf");
-        Typeface fontNexa = Typeface.createFromAsset(getAssets(), "fonts/nexaheavy.ttf");
-        Typeface fontBebas = Typeface.createFromAsset(getAssets(), "fonts/bebas.ttf");
-        Typeface fontTheBoldFont = Typeface.createFromAsset(getAssets(), "fonts/tboldfont.ttf");
-
-//        Further Styling
-        gotoother.setTypeface(fontBebas);
-        footer.setTypeface(fontBebas);
+        gotoother.setTypeface(fontBodyText);
+        footer.setTypeface(fontBodyText);
         TextView imageFormatNote = findViewById(R.id.imageFormatNote);
-        imageFormatNote.setTypeface(fontBebas);
+        imageFormatNote.setTypeface(fontBodyText);
 
-        titlescool.setTypeface(fontTheBoldFont);
-        explain.setTypeface(fontNexa);
+        titlescool.setTypeface(fontTitle);
+        explain.setTypeface(fontSubtitle);
 
         Objects.requireNonNull(getSupportActionBar()).hide(); // hide header with app title
 
         TextView[] buttons = {sendButton, notifPref, prefImgFormattingID};
         for (int i = 0; i < buttons.length; i++) {
-            buttons[i].setTypeface(fontPorter);
+            buttons[i].setTypeface(fontButton);
             if (i % 2 == 0) {
                 buttons[i].setBackgroundColor(firstBttnBG);
             } else {

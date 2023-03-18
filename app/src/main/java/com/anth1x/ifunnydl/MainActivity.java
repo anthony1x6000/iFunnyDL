@@ -1,28 +1,20 @@
 package com.anth1x.ifunnydl;
 
+import static com.anth1x.ifunnydl.fonts.*;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.OnApplyWindowInsetsListener;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String initShare;
     private static final int REQUEST_CODE = 1;
+
     private int getStatusBarHeight() {
         int result = 0;
         @SuppressLint({"InternalInsetResource", "DiscouragedApi"}) int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -53,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fonts.init(this);
 
         // Give permissions
         String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -77,25 +70,20 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-//        !!Styling!!
-//        Elements
+//      Elements
         TextView sendButton = findViewById(R.id.sendButton);
-        TextView titlescool = findViewById(R.id.titlescool);
+        TextView bigTitle = findViewById(R.id.titlescool);
         TextView footer = findViewById(R.id.footer);
         TextView explain = findViewById(R.id.explain);
+        EditText inputURL = findViewById(R.id.inputURL);
 
-//        Fonts
-        Typeface fontPorter = Typeface.createFromAsset(getAssets(), "fonts/Porter.ttf");
-        Typeface fontNexa = Typeface.createFromAsset(getAssets(), "fonts/nexaheavy.ttf");
-        Typeface fontBebas = Typeface.createFromAsset(getAssets(), "fonts/bebas.ttf");
-        Typeface fontTheBoldFont = Typeface.createFromAsset(getAssets(), "fonts/tboldfont.ttf");
-
-//        Further Styling
-        sendButton.setTypeface(fontPorter);
-        titlescool.setTypeface(fontTheBoldFont);
-        footer.setTypeface(fontBebas);
-        gotosettings.setTypeface(fontBebas);
-        explain.setTypeface(fontNexa);
+//      Styling
+        sendButton.setTypeface(fontButton);
+        bigTitle.setTypeface(fontTitle);
+        footer.setTypeface(fontBodyText);
+        gotosettings.setTypeface(fontBodyText);
+        explain.setTypeface(fontSubtitle);
+        inputURL.setTypeface(fontInput);
         int sendButtBackgroundColor = Color.argb((int) (0.65 * 255), 86, 102, 162);
         sendButton.setBackgroundColor(sendButtBackgroundColor);
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -132,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             System.out.println("Doing buttons");
 //            Button sendButton = findViewById(R.id.sendButton);
-            EditText inputURL = findViewById(R.id.inputURL);
 
             sendButton.setOnClickListener(view -> {
                 initShare = inputURL.getText().toString();
@@ -140,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("Send initshare = " + initShare);
                     startDLService(initShare);
                     finishAndRemoveTask();
-               }
+                }
             });
         }
     }

@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|top"
-                android:text="iFunny.DL"
+                android:text="iFunnyDL"
                 android:textColor="#0A142C"
                 android:textSize="54sp" />
 
