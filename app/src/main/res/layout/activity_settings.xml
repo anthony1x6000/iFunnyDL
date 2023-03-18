@@ -111,7 +111,7 @@
                     android:layout_below="@id/changeImageFormatting"
                     android:gravity="center_horizontal|top"
                     android:text="Images are stored in /Pictures/iFunny. The watermark is not removed."
-                    android:textColor="#fff" />
+                    android:textColor="#8291B6" />
 
             </RelativeLayout>
 
