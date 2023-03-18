@@ -55,15 +55,3 @@ jobs:
           draft: false
           prerelease: false
         if: github.event_name == 'release'
-      - name: Release on commit
-        uses: ChanTsune/release-with-commit@v2.8.0
-        with:
-          regexp: "Release-\\[(.+?)\\]\\s*(.*)"
-          regexp_options: "us"
-          release_name: "Release $1"
-          tag_name: "$1"
-          body: "$2"
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'

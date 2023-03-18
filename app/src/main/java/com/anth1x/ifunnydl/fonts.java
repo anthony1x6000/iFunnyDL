@@ -3,8 +3,6 @@ package com.anth1x.ifunnydl;
 import android.content.Context;
 import android.graphics.Typeface;
 
-
-
 public class fonts {
     public static Typeface fontButton;
     public static Typeface fontSubtitle;
