@@ -20,12 +20,14 @@ import org.jsoup.nodes.Element;
 
 public class DownloadService extends IntentService {
 
+    private String fileNamingScheme;
 
     public DownloadService() {
         super("DownloadService");
     }
     private String fileName;
     private boolean DMNotif;
+    private boolean imgAsiFunnyFormat;
 
     public String parseLink(String initShare) {
         String url = null;
@@ -41,18 +43,35 @@ public class DownloadService extends IntentService {
 
     public String getFileName() {
         long unixTime = System.currentTimeMillis() / 1000L;
-        @SuppressLint("DefaultLocale") String finalName = String.format("%d-%s.mp4", unixTime, fileName);
-        System.out.println("Finalname = " + finalName);
+        @SuppressLint("DefaultLocale") String finalName = String.format("%d-%s", unixTime, fileNamingScheme);
         return finalName;
     }
 
-    public void downloadWith(String fileURL) {
-        String fileName = getFileName();
-        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunnyDL");
-        File image = new File(dir, fileName);
+    public void downloadWith(String fileURL, int destination) {
+        File dir = null;
+        String imgFileFormat = null;
+        System.out.println("Starting fileURL = " + fileURL);
+        if (destination == 2) { // picture DIR
+            int index = fileURL.lastIndexOf(".");
+            imgFileFormat = "." + fileURL.substring(index + 1);
+            System.out.println("imgFileFOrmat = " + imgFileFormat);
+            if (imgAsiFunnyFormat) {
+                fileName = fileURL.replaceAll(".*/images/", "");
+            } else {
+                fileName = (getFileName() + imgFileFormat);
+            }
+            System.out.println("Finalname = " + fileName);
+            dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunny");
+        } else if (destination == 1) { // video DIR
+            fileName = (getFileName() + ".mp4");
+            System.out.println("Finalname = " + fileName);
+            dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunnyDL");
+        }
+        System.out.println("fileURL before DM request = " + fileURL);
 
+        File mediaFile = new File(dir, fileName);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(fileURL));
-        request.setDestinationUri(Uri.fromFile(image));
+        request.setDestinationUri(Uri.fromFile(mediaFile));
         if (DMNotif) {
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         }
@@ -60,28 +79,45 @@ public class DownloadService extends IntentService {
         manager.enqueue(request);
     }
 
+    public void downloadMeth(String finalURL, Boolean doPicture) {
+        try {
+            Element mediaLink = null;
+            Document doc = Jsoup.connect(finalURL).timeout(10 * 1000).get();
+            if (doPicture) {
+                mediaLink = doc.select("img[src~=(?i)\\.(webp|png|jpe?g|gif)]").first();
+                if (mediaLink != null) {
+                    String mediaRL = mediaLink.attr("src");
+                    System.out.println(mediaRL);
+                    downloadWith(mediaRL, 2); // 2: send to iFunny', the main iFunny pictures folder.
+                }
+            } else {
+                mediaLink = doc.select("video[data-src~=(?i)\\.mp4]").first();
+                if (mediaLink != null) {
+                    String mediaRL = mediaLink.attr("data-src");
+                    System.out.println(mediaRL);
+                    downloadWith(mediaRL, 1); // 1: send to iFunnyDL.
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
-        fileName = sharedPref.getString("fileName", "iFunny");
+        imgAsiFunnyFormat = sharedPref.getBoolean("imgAsiFunnyFormat", Boolean.parseBoolean("true"));
+        fileNamingScheme = sharedPref.getString("fileName", "iFunny");
         DMNotif = sharedPref.getBoolean("DMNotif", Boolean.parseBoolean("true"));
         String initShare = intent.getStringExtra("initShare");
         String finalURL = parseLink(initShare);
         System.out.println("handLing intent");
         System.out.println("finalURL = " + finalURL);
         if (finalURL != null) {
-            try {
-                Document doc = Jsoup.connect(finalURL).timeout(10 * 1000).get();
-
-                Element vidLink = doc.select("video[data-src~=(?i)\\.mp4]").first();
-                if (vidLink != null) {
-                    String mediaRL = vidLink.attr("data-src");
-                    System.out.println(mediaRL);
-                    downloadWith(mediaRL);
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (finalURL.contains("picture")){
+                downloadMeth(finalURL, true);
+            } else {
+                downloadMeth(finalURL, false);
             }
         } else {
             System.out.println("URL is " + finalURL + " | Probably null.");

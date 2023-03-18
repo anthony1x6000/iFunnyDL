@@ -2,96 +2,119 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/appbody"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back"
-    tools:context=".MainActivity"
-    android:id="@+id/appbody">
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/coverBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back" />
 
     <RelativeLayout
+        android:id="@+id/baseRelLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/header">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/titlescool"
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/titlescool"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|top"
+                android:text="iFunny.DL"
+                android:textColor="#0A142C"
+                android:textSize="54sp" />
+
+            <TextView
+                android:id="@+id/explain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/titlescool"
+                android:gravity="center_horizontal|top"
+                android:text="Share iFunny post link to this app to quickly download video."
+                android:textColor="#39445F"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal|top"
-            android:text="iFunny.DL"
-            android:textColor="#0A142C"
-            android:textSize="54sp" />
-        <TextView
-            android:id="@+id/explain"
-            android:layout_below="@id/titlescool"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal|top"
-            android:text="Share iFunny post link to this app to quickly download video."
-            android:textColor="#39445F"
-            android:textSize="15sp" />
-    </RelativeLayout>
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1">
+
+                <EditText
+                    android:id="@+id/inputURL"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:background="@drawable/input"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textColor="#9DC1EE"/>
+
+                <TextView
+                    android:id="@+id/sendButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_below="@id/inputURL"
+                    android:gravity="center"
+                    android:text="DOWNLOAD"
+                    android:textColor="#fff" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1">
-
-            <EditText
-                android:id="@+id/inputURL"
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:background="@drawable/input"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textColor="#000" />
+            android:layout_height="match_parent">
 
             <TextView
-                android:gravity="center"
-                android:textColor="#fff"
-                android:id="@+id/sendButton"
+                android:id="@+id/gotosettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/footer"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal|top"
+                android:text="Settings"
+                android:textColor="#829CD7"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/footer"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_below="@id/inputURL"
-                android:text="DOWNLOAD" />
-
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal|bottom"
+                android:text="github.com/anthony1x6000/iFunnyDL\nanthonyonline.cf"
+                android:textColor="#829CD7"
+                android:textSize="12sp" />
         </RelativeLayout>
-
-    </LinearLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/gotosettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/footer"
-            android:text="Settings"
-            android:gravity="center_horizontal|top"
-            android:textColor="#829CD7"
-            android:textSize="12sp"
-            android:layout_alignParentBottom="true" />
-        <TextView
-            android:id="@+id/footer"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="github.com/anthony1x6000/iFunnyDL\nanthonyonline.cf"
-            android:textColor="#829CD7"
-            android:textSize="12sp"
-            android:gravity="center_horizontal|bottom"
-            android:layout_alignParentBottom="true" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +49,6 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 //        Elements
-        TextView notifPref = findViewById(R.id.changeNotifPref);
         TextView sendButton = findViewById(R.id.sendButton);
         TextView titlescool = findViewById(R.id.titlescool);
         TextView explain = findViewById(R.id.explain);
@@ -56,8 +56,8 @@ public class SettingsActivity extends AppCompatActivity {
         TextView gotoother = findViewById(R.id.gotocute);
         TextView footer = findViewById(R.id.footer);
 
-        int sendButtBackgroundColor = Color.argb((int) (0.35 * 255), 86, 102, 162);
-        int notifPrefBackgroundColor = Color.argb((int) (0.55 * 255), 86, 102, 162);
+        int firstBttnBG = Color.argb((int) (0.35 * 255), 86, 102, 162);
+        int secondBttnBG = Color.argb((int) (0.45 * 255), 86, 102, 162);
 
         sendButton.setOnClickListener(v -> {
             String fileName = inputFileName.getText().toString();
@@ -71,12 +71,13 @@ public class SettingsActivity extends AppCompatActivity {
                 sendButton.setBackgroundColor(Color.RED);
                 sendButton.setText("INVALID FILE NAME");
                 new Handler().postDelayed(() -> {
-                    sendButton.setBackgroundColor(sendButtBackgroundColor);
+                    sendButton.setBackgroundColor(firstBttnBG);
                     sendButton.setText("Apply");
                 }, 800);
             }
         });
 
+        TextView notifPref = findViewById(R.id.changeNotifPref);
         SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
         AtomicBoolean currentDMNotifValue = new AtomicBoolean(sharedPref.getBoolean("DMNotif", true));
         if (currentDMNotifValue.get()) {
@@ -97,6 +98,26 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        TextView prefImgFormattingID = findViewById(R.id.changeImageFormatting);
+        AtomicBoolean prefImgiFunnyFormat = new AtomicBoolean(sharedPref.getBoolean("imgAsiFunnyFormat", true));
+        if (prefImgiFunnyFormat.get()) {
+            prefImgFormattingID.setText("Press to use video file naming format for images (UNIXTIME)");
+        } else {
+            prefImgFormattingID.setText("Press to use iFunny image file naming format for images (random text)");
+        }
+        prefImgFormattingID.setOnClickListener(v -> {
+            prefImgiFunnyFormat.set(!prefImgiFunnyFormat.get());
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("imgAsiFunnyFormat", prefImgiFunnyFormat.get());
+            editor.apply();
+
+            if (prefImgiFunnyFormat.get()) {
+                prefImgFormattingID.setText("Press to use video file naming format for images (UNIXTIME)");
+            } else {
+                prefImgFormattingID.setText("Press to use iFunny image file naming format for images (random text)");
+            }
+        });
+
         gotoother.setOnClickListener(v -> {
             Intent intent = new Intent(SettingsActivity.this, feelingLikeActivity.class);
             startActivity(intent);
@@ -112,17 +133,26 @@ public class SettingsActivity extends AppCompatActivity {
 //        Further Styling
         gotoother.setTypeface(fontBebas);
         footer.setTypeface(fontBebas);
-        sendButton.setTypeface(fontPorter);
-        notifPref.setTypeface(fontPorter);
+        TextView imageFormatNote = findViewById(R.id.imageFormatNote);
+        imageFormatNote.setTypeface(fontBebas);
+
         titlescool.setTypeface(fontTheBoldFont);
         explain.setTypeface(fontNexa);
-        sendButton.setBackgroundColor(sendButtBackgroundColor);
-        notifPref.setBackgroundColor(notifPrefBackgroundColor);
-        Objects.requireNonNull(getSupportActionBar()).hide();
 
+        Objects.requireNonNull(getSupportActionBar()).hide(); // hide header with app title
+
+        TextView[] buttons = {sendButton, notifPref, prefImgFormattingID};
+        for (int i = 0; i < buttons.length; i++) {
+            buttons[i].setTypeface(fontPorter);
+            if (i % 2 == 0) {
+                buttons[i].setBackgroundColor(firstBttnBG);
+            } else {
+                buttons[i].setBackgroundColor(secondBttnBG);
+            }
+        }
 
 //        Status and nav bar stuff
-        ConstraintLayout layout = findViewById(R.id.appbody);
+        RelativeLayout layout = findViewById(R.id.baseRelLayout);
         int statusBarHeight = getStatusBarHeight();
         int navigationBarHeight = getNavigationBarHeight();
         layout.setPadding(0, statusBarHeight, 0, navigationBarHeight);

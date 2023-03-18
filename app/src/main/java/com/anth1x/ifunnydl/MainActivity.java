@@ -7,13 +7,22 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.OnApplyWindowInsetsListener;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return result;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -97,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         footer.setText(newText);
 
 //        Status and nav bar stuff
-        ConstraintLayout layout = findViewById(R.id.appbody);
+        RelativeLayout layout = findViewById(R.id.baseRelLayout);
         int statusBarHeight = getStatusBarHeight();
         int navigationBarHeight = getNavigationBarHeight();
         layout.setPadding(0, statusBarHeight, 0, navigationBarHeight);
