@@ -3,11 +3,16 @@ package com.anth1x.ifunnydl;
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.app.IntentService;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
+import android.os.FileObserver;
+import android.os.Handler;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,14 +25,20 @@ import org.jsoup.nodes.Element;
 
 public class DownloadService extends IntentService {
 
-    private String fileNamingScheme;
-
     public DownloadService() {
         super("DownloadService");
     }
+    private long downloadID;
+    private String fileNamingScheme;
+    private int destination;
     private String fileName;
     private boolean DMNotif;
     private boolean imgAsiFunnyFormat;
+    private String vidDest = "/iFunnyDL";
+    private String tmpDest = "/iFunnyTMP";
+    private DownloadManager downloadManager;
+
+
 
     public String parseLink(String initShare) {
         String url = null;
@@ -51,6 +62,7 @@ public class DownloadService extends IntentService {
         File dir = null;
         String imgFileFormat = null;
         System.out.println("Starting fileURL = " + fileURL);
+
         if (destination == 2) { // picture DIR
             int index = fileURL.lastIndexOf(".");
             imgFileFormat = "." + fileURL.substring(index + 1);
@@ -61,11 +73,11 @@ public class DownloadService extends IntentService {
                 fileName = (getFileName() + imgFileFormat);
             }
             System.out.println("Finalname = " + fileName);
-            dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunny");
+            dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + tmpDest);
         } else if (destination == 1) { // video DIR
             fileName = (getFileName() + ".mp4");
             System.out.println("Finalname = " + fileName);
-            dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunnyDL");
+            dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + vidDest);
         }
         System.out.println("fileURL before DM request = " + fileURL);
 
@@ -76,7 +88,10 @@ public class DownloadService extends IntentService {
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         }
         DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-        manager.enqueue(request);
+        downloadID = manager.enqueue(request);
+
+
+
     }
 
     public void downloadMeth(String finalURL, Boolean doPicture) {
@@ -88,14 +103,16 @@ public class DownloadService extends IntentService {
                 if (mediaLink != null) {
                     String mediaRL = mediaLink.attr("src");
                     System.out.println(mediaRL);
-                    downloadWith(mediaRL, 2); // 2: send to iFunny', the main iFunny pictures folder.
+                    destination = 2;
+                    downloadWith(mediaRL, destination); // 2: send to iFunny', the main iFunny pictures folder.
                 }
             } else {
                 mediaLink = doc.select("video[data-src~=(?i)\\.mp4]").first();
                 if (mediaLink != null) {
                     String mediaRL = mediaLink.attr("data-src");
                     System.out.println(mediaRL);
-                    downloadWith(mediaRL, 1); // 1: send to iFunnyDL.
+                    destination = 1;
+                    downloadWith(mediaRL, destination); // 1: send to iFunnyDL - videos.
                 }
             }
 
@@ -103,6 +120,7 @@ public class DownloadService extends IntentService {
             e.printStackTrace();
         }
     }
+
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
@@ -114,7 +132,7 @@ public class DownloadService extends IntentService {
         System.out.println("handLing intent");
         System.out.println("finalURL = " + finalURL);
         if (finalURL != null) {
-            if (finalURL.contains("picture")){
+            if (finalURL.contains("picture")) {
                 downloadMeth(finalURL, true);
             } else {
                 downloadMeth(finalURL, false);
@@ -123,4 +141,5 @@ public class DownloadService extends IntentService {
             System.out.println("URL is " + finalURL + " | Probably null.");
         }
     }
+
 }
