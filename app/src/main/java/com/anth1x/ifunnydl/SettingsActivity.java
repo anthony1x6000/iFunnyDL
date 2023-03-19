@@ -79,9 +79,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         TextView notifPref = findViewById(R.id.changeNotifPref);
         SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
-        AtomicBoolean currentDMNotifValue = new AtomicBoolean(sharedPref.getBoolean("DMNotif", true));
+        AtomicBoolean currentDMNotifValue = new AtomicBoolean(sharedPref.getBoolean("DMNotif", false));
         if (currentDMNotifValue.get()) {
-            notifPref.setText("Press to disable download notifications");
+            notifPref.setText("Press to disable download notifications (kind of recommended)");
         } else {
             notifPref.setText("Press to enable download notifications");
         }
@@ -92,7 +92,7 @@ public class SettingsActivity extends AppCompatActivity {
             editor.apply();
 
             if (currentDMNotifValue.get()) {
-                notifPref.setText("Press to disable download notifications");
+                notifPref.setText("Press to disable download notifications (kind of recommended)");
             } else {
                 notifPref.setText("Press to enable download notifications");
             }
