@@ -53,6 +53,7 @@ public class fileListener extends Service {
                             System.out.println("temp file location = " + inputImageDestination);
                             cropIntent.putExtra("input_path", inputImageDestination);
                             context.startService(cropIntent);
+                            stopSelf();
                         }
                     }
                     cursor.close();
