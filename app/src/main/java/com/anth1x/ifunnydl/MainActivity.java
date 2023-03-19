@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 // ey bro dont make fun of ~~my~~ code. 50% is AI generated, 29% is stackoverflow,
-// 10% is "heavily referenced and inspired" from other github repos (https://github.com/vidovichb/iFunny_Downloader, https://github.com/switchswap/iFunny-Cropper),
+// 10% is "heavily referenced and inspired" from other github repos (https://github.com/switchswap/iFunny-Cropper),
 // 5% from russian forums, another 5% from chinese forums, and the final 1% is incoherent nonsense that I made.
     private String initShare;
     private static final int requestCode = 1;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
+    private static final String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };

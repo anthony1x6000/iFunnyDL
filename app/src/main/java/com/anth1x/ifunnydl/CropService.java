@@ -1,5 +1,7 @@
 package com.anth1x.ifunnydl;
 
+import static com.anth1x.ifunnydl.globalDefaults.tmpDest;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.IntentService;
@@ -23,23 +25,33 @@ public class CropService extends IntentService {
 
     private static final int THRESHOLD = 8;
     private static final String outputDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/iFunny/";
-    private File asFileTypeOutputDirectory = new File(outputDirectory);
-    private String tmpDest = "/iFunnyTMP/";
-
+    private final File asFileTypeOutputDirectory = new File(outputDirectory);
 
     public CropService() {
         super("CropService");
     }
 
+    public static void deleteDirectory() {
+        if (tmpDest.isDirectory()) {
+            String[] children = tmpDest.list();
+            assert children != null;
+            for (String child : children) {
+                new File(tmpDest, child).delete();
+            }
+        }
+        tmpDest.delete();
+    }
+
     @Override
     protected void onHandleIntent(Intent intent) {
+
         System.out.println("started crop service");
         if (!asFileTypeOutputDirectory.exists()) {
             asFileTypeOutputDirectory.mkdirs();
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) getApplicationContext(), new String[] { Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
+            ActivityCompat.requestPermissions((Activity) getApplicationContext(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             return;
         }
 
@@ -88,6 +100,10 @@ public class CropService extends IntentService {
                 out.flush();
                 out.close();
                 System.out.println("Cropped image");
+
+                System.out.println("Deleting temp directory");
+                deleteDirectory();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -103,10 +119,9 @@ public class CropService extends IntentService {
         int red2 = Color.red(pixel2);
         int green2 = Color.green(pixel2);
         int blue2 = Color.blue(pixel2);
-        double difference = Math.sqrt(
+        return Math.sqrt(
                 Math.pow(Math.abs(red2 - red1), 2) +
                         Math.pow(Math.abs(green2 - green1), 2) +
                         Math.pow(Math.abs(blue2 - blue1), 2));
-        return difference;
     }
 }

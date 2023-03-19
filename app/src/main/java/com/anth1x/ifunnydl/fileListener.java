@@ -1,5 +1,7 @@
 package com.anth1x.ifunnydl;
 
+import static com.anth1x.ifunnydl.globalDefaults.tmpDestString;
+
 import android.app.DownloadManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -7,18 +9,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
-import android.os.Environment;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
 public class fileListener extends Service {
-    private String tmpDest = "/iFunnyTMP/";
     private BroadcastReceiver fileListener;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
         System.out.println("FILE LISTENER STARTED");
         registerFileListener();
     }
@@ -26,11 +27,10 @@ public class fileListener extends Service {
     private void registerFileListener() {
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         fileListener = new BroadcastReceiver() {
-            private String inputImageDestination = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + tmpDest;
+            private String inputImageDestination;
 
             @Override
             public void onReceive(Context context, Intent intent) {
-                System.out.println("Onrecieve hit");
                 String action = intent.getAction();
                 if (action.equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) {
                     long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);
@@ -41,12 +41,13 @@ public class fileListener extends Service {
                     if (cursor.moveToFirst()) {
                         int statusIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
                         if (DownloadManager.STATUS_SUCCESSFUL == cursor.getInt(statusIndex)) {
+                            inputImageDestination = tmpDestString + "/";
                             int uriIndex = cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
                             String downloadedFilePath = cursor.getString(uriIndex);
                             String fileName = downloadedFilePath.substring(downloadedFilePath.lastIndexOf('/') + 1);
                             String message = "Download completed: " + fileName;
                             System.out.println(message);
-                            System.out.println("Asking for crop sercice");
+                            System.out.println("Asking for crop service");
                             Intent cropIntent = new Intent(context, CropService.class);
                             inputImageDestination += fileName;
                             System.out.println("temp file location = " + inputImageDestination);
