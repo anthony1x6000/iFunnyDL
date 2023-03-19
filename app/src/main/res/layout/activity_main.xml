@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/baseRelLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,22 +51,14 @@
                 android:text="Share iFunny post link to this app to quickly download video."
                 android:textColor="#39445F"
                 android:textSize="15sp" />
-        </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <View
+            <LinearLayout
+                android:id="@+id/centerButtons"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.1" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.1">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/explain"
+                android:layout_marginTop="54dp">
 
                 <EditText
                     android:id="@+id/inputURL"
@@ -80,15 +72,17 @@
                 <TextView
                     android:id="@+id/sendButton"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="80dp"
                     android:layout_below="@id/inputURL"
                     android:gravity="center"
                     android:text="DOWNLOAD"
                     android:textColor="#fff" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
+
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -100,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/footer"
                 android:layout_alignParentBottom="true"
-                android:gravity="center_horizontal|top"
+                android:gravity="top"
                 android:text="Settings"
                 android:textColor="#829CD7"
                 android:textSize="12sp" />
@@ -110,11 +104,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_alignParentBottom="true"
-                android:gravity="center_horizontal|bottom"
+                android:gravity="right|bottom"
                 android:text="github.com/anthony1x6000/iFunnyDL\nanthonyonline.cf"
                 android:textColor="#829CD7"
                 android:textSize="12sp" />
         </RelativeLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

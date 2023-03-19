@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         gotosettings.setTypeface(fontBodyText);
         explain.setTypeface(fontSubtitle);
         inputURL.setTypeface(fontInput);
-        int sendButtBackgroundColor = Color.argb((int) (0.65 * 255), 86, 102, 162);
+        int sendButtBackgroundColor = Color.argb((int) (0.45 * 255), 86, 102, 162);
         sendButton.setBackgroundColor(sendButtBackgroundColor);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         footer.setText(newText);
 
 //        Status and nav bar stuff
-        RelativeLayout layout = findViewById(R.id.baseRelLayout);
+        LinearLayout layout = findViewById(R.id.baseRelLayout);
         int statusBarHeight = getStatusBarHeight();
         int navigationBarHeight = getNavigationBarHeight();
         layout.setPadding(0, statusBarHeight, 0, navigationBarHeight);

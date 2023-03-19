@@ -17,12 +17,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ougi" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/baseRelLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -30,7 +29,8 @@
         <RelativeLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|top">
 
             <TextView
                 android:id="@+id/titlescool"
@@ -53,19 +53,12 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/centerButtons"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.1" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.5">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/header"
+            android:layout_marginTop="54dp">
 
                 <EditText
                     android:id="@+id/inputFileName"
@@ -110,38 +103,37 @@
                     android:layout_height="35dp"
                     android:layout_below="@id/changeImageFormatting"
                     android:gravity="center_horizontal|top"
-                    android:text="Images are stored in /Pictures/iFunny. The watermark is not removed."
+                    android:text="Images are stored in /Pictures/iFunny. The watermark is automatically removed."
                     android:textColor="#8291B6" />
+            </LinearLayout>
 
-            </RelativeLayout>
+    </LinearLayout>
 
-        </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mainFooter">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/gotocute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/footer"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal|top"
+            android:text="😭"
+            android:textColor="#829CD7"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/footer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/gotocute"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/footer"
-                android:layout_alignParentBottom="true"
-                android:gravity="center_horizontal|top"
-                android:text="😭"
-                android:textColor="#829CD7"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/footer"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_alignParentBottom="true"
-                android:gravity="center_horizontal|bottom"
-                android:text="github.com/anthony1x6000/iFunnyDL\nanthonyonline.cf"
-                android:textColor="#829CD7"
-                android:textSize="12sp" />
-        </RelativeLayout>
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="right|bottom"
+            android:text="github.com/anthony1x6000/iFunnyDL\nanthonyonline.cf"
+            android:textColor="#829CD7"
+            android:textSize="12sp" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

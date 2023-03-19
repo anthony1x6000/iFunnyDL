@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -145,9 +146,11 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
 //        Status and nav bar stuff
-        RelativeLayout layout = findViewById(R.id.baseRelLayout);
+        LinearLayout layout = findViewById(R.id.baseRelLayout);
+        RelativeLayout mainFooter = findViewById(R.id.mainFooter);
         int statusBarHeight = getStatusBarHeight();
         int navigationBarHeight = getNavigationBarHeight();
-        layout.setPadding(0, statusBarHeight, 0, navigationBarHeight);
+        layout.setPadding(0, statusBarHeight, 0, 0);
+        mainFooter.setPadding(0, 0, 0, navigationBarHeight);
     }
 }
