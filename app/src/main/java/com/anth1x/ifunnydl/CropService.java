@@ -89,11 +89,10 @@ public class CropService extends IntentService {
             }
 
             // Save image
-            File outputDir = new File(outputDirectory);
-            if (!outputDir.exists()) {
-                outputDir.mkdirs();
+            if (!asFileTypeOutputDirectory.exists()) {
+                asFileTypeOutputDirectory.mkdirs();
             }
-            File outputFile = new File(outputDir, filename);
+            File outputFile = new File(asFileTypeOutputDirectory, filename);
             try {
                 FileOutputStream out = new FileOutputStream(outputFile);
                 cropped.compress(Bitmap.CompressFormat.JPEG, 100, out);
