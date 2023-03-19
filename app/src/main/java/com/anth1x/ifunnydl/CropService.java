@@ -1,18 +1,21 @@
 package com.anth1x.ifunnydl;
 
-import android.app.DownloadManager;
+import android.Manifest;
+import android.app.Activity;
 import android.app.IntentService;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Environment;
-import android.util.Log;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -22,34 +25,34 @@ public class CropService extends IntentService {
     private static final String OUTPUT_DIRECTORY = Environment.DIRECTORY_PICTURES + "/croppedOutput/";
 
     public CropService() {
-        super("ImageCropService");
+        super("CropService");
     }
-    private BroadcastReceiver onComplete;
 
     @Override
     protected void onHandleIntent(Intent intent) {
         System.out.println("started crop service");
 
-        onComplete = new BroadcastReceiver() {
-            public void onReceive(Context ctxt, Intent intent) {
-                System.out.println("Download complete!");
-                unregisterReceiver(onComplete);
-                onComplete = null;
-            }
-        };
-
-        registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-
-        String inputPath = intent.getStringExtra("input_path");
-        if (inputPath == null) {
-            Log.d("ImageCropService", "Input path is null");
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) getApplicationContext(), new String[] { Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
             return;
         }
 
-        File inputFile = new File(inputPath);
+
+        String inputPath = intent.getStringExtra("input_path");
+//        File inputFile = new File(inputPath);
+        File inputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "iFunnyTMP/1acropthis.jpg");
+        FileInputStream inputStream = null;
         String filename = inputFile.getName();
+        try {
+            inputStream = new FileInputStream(inputFile);
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
         if (filename.endsWith(".jpg")) {
-            Bitmap img = BitmapFactory.decodeFile(inputFile.getAbsolutePath());
+            Bitmap img = BitmapFactory.decodeStream(inputStream);
             int width = img.getWidth();
             int length = img.getHeight();
             int curr_y = length - 1;
@@ -63,7 +66,7 @@ public class CropService extends IntentService {
             // For possible bad crops since the average watermark size is 21 pixels or less
             Bitmap cropped;
             if (watermark_size > 21) {
-                Log.d("ImageCropService", "[Skipped]: " + filename + ", " + watermark_size);
+                System.out.println("Skipped a file, watermark something something");
                 return;
             } else {
                 cropped = Bitmap.createBitmap(img, 0, 0, width, length - watermark_size);
@@ -84,6 +87,7 @@ public class CropService extends IntentService {
                 e.printStackTrace();
             }
         }
+
     }
 
     // Get color difference

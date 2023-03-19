@@ -69,6 +69,7 @@ public class DownloadService extends IntentService {
                 fileName = (getFileName() + imgFileFormat);
             }
             System.out.println("Finalname = " + fileName);
+
             dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + tmpDest);
         } else if (destination == 1) { // video DIR
             fileName = (getFileName() + ".mp4");
@@ -86,10 +87,11 @@ public class DownloadService extends IntentService {
         DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
 
-        Intent intent = new Intent(this, fileListener.class);
-        startService(intent);
-
-
+        if (destination == 2) {
+            System.out.println("destination is 2, asking for fileListener");
+            Intent intent = new Intent(this, fileListener.class);
+            startService(intent);
+        }
     }
 
     public void downloadMeth(String finalURL, Boolean doPicture) {
