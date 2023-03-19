@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -160,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startDLService(String initShare) {
-        System.out.println("Called startService");
+        System.out.println("Calling Downloadservice...");
         Intent intentSendOver = new Intent(this, DownloadService.class);
         intentSendOver.putExtra("initShare", initShare);
         startService(intentSendOver);
