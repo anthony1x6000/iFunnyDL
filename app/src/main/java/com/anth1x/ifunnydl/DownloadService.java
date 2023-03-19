@@ -28,7 +28,6 @@ public class DownloadService extends IntentService {
     public DownloadService() {
         super("DownloadService");
     }
-    private long downloadID;
     private String fileNamingScheme;
     private int destination;
     private String fileName;
@@ -36,9 +35,6 @@ public class DownloadService extends IntentService {
     private boolean imgAsiFunnyFormat;
     private String vidDest = "/iFunnyDL";
     private String tmpDest = "/iFunnyTMP";
-    private DownloadManager downloadManager;
-
-
 
     public String parseLink(String initShare) {
         String url = null;
@@ -88,8 +84,10 @@ public class DownloadService extends IntentService {
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         }
         DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-        downloadID = manager.enqueue(request);
+        manager.enqueue(request);
 
+        Intent intent = new Intent(this, fileListener.class);
+        startService(intent);
 
 
     }
@@ -141,5 +139,4 @@ public class DownloadService extends IntentService {
             System.out.println("URL is " + finalURL + " | Probably null.");
         }
     }
-
 }

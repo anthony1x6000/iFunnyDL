@@ -25,6 +25,7 @@
             android:exported="false" />
 
         <service android:name=".DownloadService" />
+        <service android:name=".fileListener" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
