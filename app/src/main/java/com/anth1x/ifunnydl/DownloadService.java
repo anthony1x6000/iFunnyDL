@@ -137,4 +137,10 @@ public class DownloadService extends IntentService {
             System.out.println("URL is " + finalURL + " | Probably null.");
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        System.out.println("Killed Download Service.");
+    }
 }

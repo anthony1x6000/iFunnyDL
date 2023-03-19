@@ -123,4 +123,10 @@ public class CropService extends IntentService {
                         Math.pow(Math.abs(green2 - green1), 2) +
                         Math.pow(Math.abs(blue2 - blue1), 2));
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        System.out.println("Killed Crop Service.");
+    }
 }
