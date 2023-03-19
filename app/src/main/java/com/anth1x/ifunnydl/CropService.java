@@ -22,7 +22,8 @@ import java.io.IOException;
 public class CropService extends IntentService {
 
     private static final int THRESHOLD = 8;
-    private static final String OUTPUT_DIRECTORY = Environment.DIRECTORY_PICTURES + "/croppedOutput/";
+    private static final String outputDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/croppedOutput/";
+    private File asFileTypeOutputDirectory = new File(outputDirectory);
 
     public CropService() {
         super("CropService");
@@ -31,13 +32,14 @@ public class CropService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         System.out.println("started crop service");
-
+        if (!asFileTypeOutputDirectory.exists()) {
+            asFileTypeOutputDirectory.mkdirs();
+        }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) getApplicationContext(), new String[] { Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
             return;
         }
-
 
         String inputPath = intent.getStringExtra("input_path");
 //        File inputFile = new File(inputPath);
@@ -73,7 +75,7 @@ public class CropService extends IntentService {
             }
 
             // Save image
-            File outputDir = new File(OUTPUT_DIRECTORY);
+            File outputDir = new File(outputDirectory);
             if (!outputDir.exists()) {
                 outputDir.mkdirs();
             }

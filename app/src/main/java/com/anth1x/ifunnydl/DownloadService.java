@@ -71,6 +71,7 @@ public class DownloadService extends IntentService {
             System.out.println("Finalname = " + fileName);
 
             dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + tmpDest);
+            System.out.println("sedn 2 Directory = " + dir);
         } else if (destination == 1) { // video DIR
             fileName = (getFileName() + ".mp4");
             System.out.println("Finalname = " + fileName);

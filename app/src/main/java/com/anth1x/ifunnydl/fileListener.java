@@ -34,40 +34,11 @@ public class fileListener extends Service {
         registerFileListener();
     }
 
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
-
-    public void verifyStoragePermissions(Activity activity) {
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
-        }
-    }
-
     private void registerFileListener() {
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         fileListener = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-
-                // Give permissions
-                String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE};
-                List<String> permissionsToRequest = new ArrayList<>();
-                for (String permission : permissions) {
-                    if (ContextCompat.checkSelfPermission(fileListener.this, permission) != PackageManager.PERMISSION_GRANTED) {
-                        permissionsToRequest.add(permission);
-                    }
-                }
-                if (!permissionsToRequest.isEmpty()) {
-                    ActivityCompat.requestPermissions((Activity) getApplicationContext(),
-                            permissionsToRequest.toArray(new String[0]),
-                            requestCode);
-                }
-                verifyStoragePermissions((Activity) getApplicationContext());
-
 
                 System.out.println("Onrecieve hit");
                 String action = intent.getAction();
