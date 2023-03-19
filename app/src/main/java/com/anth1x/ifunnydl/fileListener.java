@@ -1,29 +1,18 @@
 package com.anth1x.ifunnydl;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Environment;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class fileListener extends Service {
-    private static final int REQUEST_EXTERNAL_STORAGE = 5;
-    private static final int requestCode = 2;
-
     private String tmpDest = "/iFunnyTMP/";
     private BroadcastReceiver fileListener;
 
@@ -37,9 +26,10 @@ public class fileListener extends Service {
     private void registerFileListener() {
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         fileListener = new BroadcastReceiver() {
+            private String inputImageDestination = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + tmpDest;
+
             @Override
             public void onReceive(Context context, Intent intent) {
-
                 System.out.println("Onrecieve hit");
                 String action = intent.getAction();
                 if (action.equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) {
@@ -58,7 +48,9 @@ public class fileListener extends Service {
                             System.out.println(message);
                             System.out.println("Asking for crop sercice");
                             Intent cropIntent = new Intent(context, CropService.class);
-                            cropIntent.putExtra("input_path", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + tmpDest + fileName));
+                            inputImageDestination += fileName;
+                            System.out.println("temp file location = " + inputImageDestination);
+                            cropIntent.putExtra("input_path", inputImageDestination);
                             context.startService(cropIntent);
                         }
                     }

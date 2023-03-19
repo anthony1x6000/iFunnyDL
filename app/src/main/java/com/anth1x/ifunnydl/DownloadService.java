@@ -3,25 +3,20 @@ package com.anth1x.ifunnydl;
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.app.IntentService;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
-import android.os.FileObserver;
-import android.os.Handler;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 public class DownloadService extends IntentService {
 

@@ -22,8 +22,10 @@ import java.io.IOException;
 public class CropService extends IntentService {
 
     private static final int THRESHOLD = 8;
-    private static final String outputDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/croppedOutput/";
+    private static final String outputDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/iFunny/";
     private File asFileTypeOutputDirectory = new File(outputDirectory);
+    private String tmpDest = "/iFunnyTMP/";
+
 
     public CropService() {
         super("CropService");
@@ -42,8 +44,8 @@ public class CropService extends IntentService {
         }
 
         String inputPath = intent.getStringExtra("input_path");
-//        File inputFile = new File(inputPath);
-        File inputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "iFunnyTMP/1acropthis.jpg");
+        File inputFile = new File(inputPath);
+//        File inputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), tmpDest + "rraahh");
         FileInputStream inputStream = null;
         String filename = inputFile.getName();
         try {
@@ -85,6 +87,7 @@ public class CropService extends IntentService {
                 cropped.compress(Bitmap.CompressFormat.JPEG, 100, out);
                 out.flush();
                 out.close();
+                System.out.println("Cropped image");
             } catch (IOException e) {
                 e.printStackTrace();
             }
