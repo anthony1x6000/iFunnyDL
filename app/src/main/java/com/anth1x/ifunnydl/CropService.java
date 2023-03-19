@@ -26,6 +26,7 @@ public class CropService extends IntentService {
     private static final int THRESHOLD = 8;
     private static final String outputDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/iFunny/";
     private final File asFileTypeOutputDirectory = new File(outputDirectory);
+    private FileInputStream inputStream;
 
     public CropService() {
         super("CropService");
@@ -49,21 +50,14 @@ public class CropService extends IntentService {
         if (!asFileTypeOutputDirectory.exists()) {
             asFileTypeOutputDirectory.mkdirs();
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) getApplicationContext(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-            return;
-        }
 
         String inputPath = intent.getStringExtra("input_path");
         File inputFile = new File(inputPath);
 //        File inputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), tmpDest + "rraahh");
-        FileInputStream inputStream = null;
         String filename = inputFile.getName();
         try {
             inputStream = new FileInputStream(inputFile);
-
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -127,6 +121,14 @@ public class CropService extends IntentService {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            System.out.println("ALWAYS DOES THIS ERROR. dont worry about it.");
+            e.printStackTrace();
+            System.out.println("ALWAYS DOES THAT ERROR. dont worry about it.");
+            // TODO: fix why FileInputStream is so dog shit ... or find a good alternative (better idea)
+        }
         System.out.println("Killed Crop Service.");
     }
 }

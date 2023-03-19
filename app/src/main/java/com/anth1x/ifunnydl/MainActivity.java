@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-// ey bro dont make fun of ~~my~~ code. 50% is AI generated, 29% is stackoverflow,
+    // ey bro dont make fun of ~~my~~ code. 50% is AI generated, 29% is stackoverflow,
 // 10% is "heavily referenced and inspired" from other github repos (https://github.com/switchswap/iFunny-Cropper),
 // 5% from russian forums, another 5% from chinese forums, and the final 1% is incoherent nonsense that I made.
     private String initShare;
@@ -144,12 +144,13 @@ public class MainActivity extends AppCompatActivity {
 
             sendButton.setOnClickListener(view -> {
                 initShare = inputURL.getText().toString();
-                if (initShare.contains("g0")) {
-                    System.out.println("g0 - Bypass download, do crop");
-                    Intent cropIntent = new Intent(this, CropService.class);
-                    cropIntent.putExtra("input_path", Environment.DIRECTORY_PICTURES);
-                    startService(cropIntent);
-                } else if (!initShare.isEmpty() && initShare.contains("ifunny")) {
+//                if (initShare.contains("g0")) {
+//                    System.out.println("g0 - Bypass download, do crop");
+//                    Intent cropIntent = new Intent(this, CropService.class);
+//                    cropIntent.putExtra("input_path", Environment.DIRECTORY_PICTURES);
+//                    startService(cropIntent);
+//                } else
+                if (!initShare.isEmpty() && initShare.contains("ifunny")) {
                     System.out.println("Send initshare = " + initShare);
                     startDLService(initShare);
                     finishAndRemoveTask();
