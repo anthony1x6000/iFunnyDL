@@ -1,6 +1,10 @@
 package com.anth1x.ifunnydl;
 
-import static com.anth1x.ifunnydl.fonts.*;
+import static com.anth1x.ifunnydl.fonts.fontBodyText;
+import static com.anth1x.ifunnydl.fonts.fontButton;
+import static com.anth1x.ifunnydl.fonts.fontInput;
+import static com.anth1x.ifunnydl.fonts.fontSubtitle;
+import static com.anth1x.ifunnydl.fonts.fontTitle;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -9,7 +13,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,9 +27,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    // ey bro dont make fun of ~~my~~ code. 50% is AI generated, 29% is stackoverflow,
-// 10% is "heavily referenced and inspired" from other github repos (https://github.com/switchswap/iFunny-Cropper),
-// 5% from russian forums, another 5% from chinese forums, and the final 1% is incoherent nonsense that I made.
+
     private String initShare;
     private static final int requestCode = 1;
 
@@ -49,10 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static final String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
+    private static final String[] PERMISSIONS_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     public void verifyStoragePermissions(Activity activity) {
         int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -61,9 +59,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Call this method from onCreate() or onResume() of your activity
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
         fonts.init(this);
 
         // Give permissions
-        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE};
+        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
         List<String> permissionsToRequest = new ArrayList<>();
         for (String permission : permissions) {
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -80,9 +74,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         if (!permissionsToRequest.isEmpty()) {
-            ActivityCompat.requestPermissions(this,
-                    permissionsToRequest.toArray(new String[0]),
-                    requestCode);
+            ActivityCompat.requestPermissions(this, permissionsToRequest.toArray(new String[0]), requestCode);
         }
         verifyStoragePermissions(this);
 
@@ -144,12 +136,6 @@ public class MainActivity extends AppCompatActivity {
 
             sendButton.setOnClickListener(view -> {
                 initShare = inputURL.getText().toString();
-//                if (initShare.contains("g0")) {
-//                    System.out.println("g0 - Bypass download, do crop");
-//                    Intent cropIntent = new Intent(this, CropService.class);
-//                    cropIntent.putExtra("input_path", Environment.DIRECTORY_PICTURES);
-//                    startService(cropIntent);
-//                } else
                 if (!initShare.isEmpty() && initShare.contains("ifunny")) {
                     System.out.println("Send initshare = " + initShare);
                     startDLService(initShare);

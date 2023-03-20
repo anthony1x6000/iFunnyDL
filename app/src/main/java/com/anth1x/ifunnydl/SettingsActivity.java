@@ -1,6 +1,9 @@
 package com.anth1x.ifunnydl;
 
-import static com.anth1x.ifunnydl.fonts.*;
+import static com.anth1x.ifunnydl.fonts.fontBodyText;
+import static com.anth1x.ifunnydl.fonts.fontButton;
+import static com.anth1x.ifunnydl.fonts.fontSubtitle;
+import static com.anth1x.ifunnydl.fonts.fontTitle;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
