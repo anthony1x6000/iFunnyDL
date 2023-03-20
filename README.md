@@ -4,7 +4,7 @@ Just share a post through the iFunny app to this app and then it'll download the
 Customizable file formatting (kinda), default is unixtime-iFunny.mp4
 
 Can download images, but it doesn't crop out the iFunny watermark. \
-Note: Releases above 1.3.1 should crop out the iFunny watermark. 
+Note: Releases 1.4.x and above should crop out the iFunny watermark. 
 
 ## Compatibility
 Verified compatibility with Android 6, 10, 13. 
