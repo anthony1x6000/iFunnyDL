@@ -2,22 +2,15 @@ package com.anth1x.ifunnydl;
 
 import static com.anth1x.ifunnydl.globalDefaults.tmpDest;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Environment;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -26,7 +19,6 @@ public class CropService extends IntentService {
     private static final int THRESHOLD = 8;
     private static final String outputDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/iFunny/";
     private final File asFileTypeOutputDirectory = new File(outputDirectory);
-    private FileInputStream inputStream;
 
     public CropService() {
         super("CropService");
@@ -55,14 +47,15 @@ public class CropService extends IntentService {
         File inputFile = new File(inputPath);
 //        File inputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), tmpDest + "rraahh");
         String filename = inputFile.getName();
-        try {
-            inputStream = new FileInputStream(inputFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            inputStream = new FileInputStream(inputFile);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+
 
         if (filename.endsWith(".jpg")) {
-            Bitmap img = BitmapFactory.decodeStream(inputStream);
+            Bitmap img = BitmapFactory.decodeFile(inputFile.getAbsolutePath());
             int width = img.getWidth();
             int length = img.getHeight();
             int curr_y = length - 1;
@@ -121,14 +114,14 @@ public class CropService extends IntentService {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        try {
-            inputStream.close();
-        } catch (IOException e) {
-            System.out.println("ALWAYS DOES THIS ERROR. dont worry about it.");
-            e.printStackTrace();
-            System.out.println("ALWAYS DOES THAT ERROR. dont worry about it.");
-            // TODO: fix why FileInputStream is so dog shit ... or find a good alternative (better idea)
-        }
+//        try {
+//            inputStream.close();
+//        } catch (IOException e) {
+//            System.out.println("ALWAYS DOES THIS ERROR. dont worry about it.");
+//            e.printStackTrace();
+//            System.out.println("ALWAYS DOES THAT ERROR. dont worry about it.");
+//            // TODO: fix why FileInputStream is so dog shit ... or find a good alternative (better idea)
+//        }
         System.out.println("Killed Crop Service.");
     }
 }

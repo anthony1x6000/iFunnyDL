@@ -15,8 +15,8 @@ Download the APK, install it, \
 Then play this video. \
 <a href="https://imgur.com/KhgcT8b"><img width=350 src="https://i.imgur.com/6C7LDXA.png" /></a>
 
-## Known bugs
-The following error message comes up after the app is done cropping an image. This is caused by the app not asking FileInputStream to close. 
+<!-- ## Known bugs -->
+<!-- The following error message comes up after the app is done cropping an image. This is caused by the app not asking FileInputStream to close. 
 ```agsl
     E/System: java.io.IOException: close failed: EACCES (Permission denied)
-```
+``` -->
