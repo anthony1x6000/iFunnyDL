@@ -2,6 +2,7 @@ package com.anth1x.ifunnydl;
 
 import static com.anth1x.ifunnydl.fonts.fontBodyText;
 import static com.anth1x.ifunnydl.fonts.fontButton;
+import static com.anth1x.ifunnydl.fonts.fontInput;
 import static com.anth1x.ifunnydl.fonts.fontSubtitle;
 import static com.anth1x.ifunnydl.fonts.fontTitle;
 
@@ -132,6 +133,7 @@ public class SettingsActivity extends AppCompatActivity {
         footer.setTypeface(fontBodyText);
         TextView imageFormatNote = findViewById(R.id.imageFormatNote);
         imageFormatNote.setTypeface(fontBodyText);
+        inputFileName.setTypeface(fontInput);
 
         titlescool.setTypeface(fontTitle);
         explain.setTypeface(fontSubtitle);
