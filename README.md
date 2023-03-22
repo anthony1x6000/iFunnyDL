@@ -11,9 +11,18 @@ Verified compatibility with Android 6, 10, 13.
 Should work 100% with Android 10+ 
 
 ## Usage
-Download the APK, install it, \
-Then play this video. \
-<a href="https://imgur.com/KhgcT8b"><img width=350 src="https://i.imgur.com/6C7LDXA.png" /></a>
+Download the APK, install it, and share an iFunny post to the app to download. 
+## Video tutorials
+<table>
+  <tr>
+    <th>Video downloading</th>
+    <th>Image downloading and autocropping</th>
+  </tr>
+  <tr>
+    <td><a href="https://imgur.com/KhgcT8b"><img width=350 src="https://i.imgur.com/72w0sI0.png" /></a></td>
+    <td><a href="https://imgur.com/qavUX3N"><img width=350 src="https://i.imgur.com/5m3uo8h.png" /></a></td>
+  </tr>
+</table>
 
 <!-- ## Known bugs -->
 <!-- The following error message comes up after the app is done cropping an image. This is caused by the app not asking FileInputStream to close. 
