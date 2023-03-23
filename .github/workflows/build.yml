@@ -13,17 +13,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get current date
         id: current-date
-        run: echo "::set-output name=date::$(date +'%Y%m%d')"
+        run: echo "CURRENT_DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
       - name: Print date
-        run: echo ${{ steps.current-date.outputs.date }}
+        run: echo $CURRENT_DATE
 
       - name: Set up JDK
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
           java-version: '11'
@@ -35,13 +35,13 @@ jobs:
         run: ./gradlew assembleDebug
 
       - name: Move + Rename APK
-        run: mv app/build/outputs/apk/debug/app-debug.apk iFunnyDL-${{ steps.current-date.outputs.date }}.apk
+        run: mv app/build/outputs/apk/debug/app-debug.apk iFunnyDL-$CURRENT_DATE.apk
 
       - name: Upload APK as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: iFunnyDLzip
-          path: iFunnyDL-${{ steps.current-date.outputs.date }}.apk
+          path: iFunnyDL-$CURRENT_DATE.apk
 
       - name: Release APK
         uses: softprops/action-gh-release@v1
@@ -49,8 +49,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            iFunnyDL-${{ steps.current-date.outputs.date }}.apk
-          body: " \n\nDownload ``iFunnyDL-${{ steps.current-date.outputs.date }}.apk`` and install it on your android device. Share an iFunny post to the app or paste a link into the URL box and it'll download it to Pictures/iFunnyDL."
+            iFunnyDL-$CURRENT_DATE.apk
+          body: " \n\nDownload ``iFunnyDL-$CURRENT_DATE.apk`` and install it on your android device. Share an iFunny post to the app or paste a link into the URL box and it'll download it to Pictures/iFunnyDL."
           append_body: true
           draft: false
           prerelease: false
