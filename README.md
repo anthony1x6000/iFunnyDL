@@ -26,7 +26,7 @@ Download the APK, install it, and share an iFunny post to the app to download.
   </tr>
   <tr>
     <td><a href="https://imgur.com/KhgcT8b"><img width=350 src="https://i.imgur.com/72w0sI0.png" /></a></td>
-    <td><a href="https://imgur.com/qavUX3N"><img width=350 src="https://i.imgur.com/UenbhS3.png" /></a></td>
+    <td><a href="https://imgur.com/rsARcO0"><img width=350 src="https://i.imgur.com/UenbhS3.png" /></a></td>
   </tr>
 </table>
 
