@@ -50,13 +50,13 @@ public class DownloadService extends IntentService {
         return finalName;
     }
 
-    public void downloadWith(String fileURL, int destination) {
+    public void downloadWith(String fileURL, boolean sendToPictures) {
 
         File dir = null;
         String imgFileFormat;
         System.out.println("Starting fileURL = " + fileURL);
 
-        if (destination == 2) { // picture DIR
+        if (sendToPictures) { // picture DIR
             int index = fileURL.lastIndexOf(".");
             imgFileFormat = "." + fileURL.substring(index + 1);
             System.out.println("imgFileFOrmat = " + imgFileFormat);
@@ -69,7 +69,7 @@ public class DownloadService extends IntentService {
 
             dir = tmpDest;
             System.out.println("sedn 2 Directory = " + dir);
-        } else if (destination == 1) { // video DIR
+        } else if (!sendToPictures) { // video DIR
             fileName = (getFileName() + ".mp4");
             System.out.println("Finalname = " + fileName);
             String vidDest = "/iFunnyDL";
@@ -86,8 +86,8 @@ public class DownloadService extends IntentService {
         DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
 
-        if (destination == 2) {
-            System.out.println("destination is 2, asking for fileListener");
+        if (sendToPictures) {
+            System.out.println("sending to pictures. asking for fileListener");
             Intent intent = new Intent(this, fileListener.class);
             startService(intent);
         }
@@ -97,22 +97,22 @@ public class DownloadService extends IntentService {
         try {
             Element mediaLink;
             Document doc = Jsoup.connect(finalURL).timeout(10 * 1000).get();
-            int destination;
+            boolean sendToPictures;
             if (doPicture) {
                 mediaLink = doc.select("img[src~=(?i)\\.(webp|png|jpe?g|gif)]").first();
                 if (mediaLink != null) {
                     String mediaRL = mediaLink.attr("src");
                     System.out.println(mediaRL);
-                    destination = 2;
-                    downloadWith(mediaRL, destination); // 2: send to iFunny', the main iFunny pictures folder.
+                    sendToPictures = true;
+                    downloadWith(mediaRL, sendToPictures); // 2: send to iFunny', the main iFunny pictures folder.
                 }
             } else {
                 mediaLink = doc.select("video[data-src~=(?i)\\.mp4]").first();
                 if (mediaLink != null) {
                     String mediaRL = mediaLink.attr("data-src");
                     System.out.println(mediaRL);
-                    destination = 1;
-                    downloadWith(mediaRL, destination); // 1: send to iFunnyDL - videos.
+                    sendToPictures = false;
+                    downloadWith(mediaRL, sendToPictures); // 1: send to iFunnyDL - videos.
                 }
             }
 
