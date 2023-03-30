@@ -126,7 +126,7 @@ public class DownloadService extends IntentService {
         SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
         imgAsiFunnyFormat = sharedPref.getBoolean("imgAsiFunnyFormat", Boolean.parseBoolean("true"));
         fileNamingScheme = sharedPref.getString("fileName", "iFunny");
-        DMNotif = sharedPref.getBoolean("DMNotif", Boolean.parseBoolean("false"));
+        DMNotif = sharedPref.getBoolean("DMNotif", Boolean.parseBoolean("true"));
         String initShare = intent.getStringExtra("initShare");
         String finalURL = parseLink(initShare);
         System.out.println("handLing intent");

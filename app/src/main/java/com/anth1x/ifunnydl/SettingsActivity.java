@@ -84,7 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         TextView notifPref = findViewById(R.id.changeNotifPref);
         SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
-        AtomicBoolean currentDMNotifValue = new AtomicBoolean(sharedPref.getBoolean("DMNotif", false));
+        AtomicBoolean currentDMNotifValue = new AtomicBoolean(sharedPref.getBoolean("DMNotif", true));
         if (currentDMNotifValue.get()) {
             notifPref.setText("Press to disable download notifications (kind of recommended)");
         } else {
@@ -124,9 +124,11 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         gotoother.setOnClickListener(v -> {
-            Intent intent = new Intent(SettingsActivity.this, feelingLikeActivity.class);
+//            Intent intent = new Intent(SettingsActivity.this, feelingLikeActivity.class);
+            Intent intent = new Intent(SettingsActivity.this, DisplayHistoryActivity.class);
             startActivity(intent);
         });
+
 
 //        !!Styling!!
         gotoother.setTypeface(fontBodyText);

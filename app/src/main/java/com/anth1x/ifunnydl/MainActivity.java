@@ -59,11 +59,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fonts.init(this);
+        urlHistory history = new urlHistory(this);
 
         // Give permissions
         String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
@@ -121,12 +123,11 @@ public class MainActivity extends AppCompatActivity {
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             System.out.println("started for share");
             if ("text/plain".equals(type)) {
-                // Get the shared text data
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
                 if (sharedText != null) {
                     System.out.println("shared text = " + sharedText);
+                    history.addURL(sharedText);
 
-                    // start download service here with sharedText
                     startDLService(sharedText);
                     finishAndRemoveTask();
                 }
@@ -138,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
                 initShare = inputURL.getText().toString();
                 if (!initShare.isEmpty() && initShare.contains("ifunny")) {
                     System.out.println("Send initshare = " + initShare);
+                    history.addURL(initShare);
+
                     startDLService(initShare);
                     finishAndRemoveTask();
                 }
@@ -151,4 +154,5 @@ public class MainActivity extends AppCompatActivity {
         intentSendOver.putExtra("initShare", initShare);
         startService(intentSendOver);
     }
+
 }
