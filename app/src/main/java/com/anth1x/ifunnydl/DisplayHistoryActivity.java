@@ -144,7 +144,7 @@ public class DisplayHistoryActivity extends AppCompatActivity {
         if (times.isEmpty()) {
             TableRow row = new TableRow(this);
             TextView textView = new TextView(this);
-            textView.setText("Missing time value");
+            textView.setText("Missing value");
             textView.setTextColor(Color.WHITE);
             textView.setTypeface(fontBodyText);
             row.addView(textView);
