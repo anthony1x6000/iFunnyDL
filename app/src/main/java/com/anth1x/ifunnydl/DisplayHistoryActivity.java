@@ -1,28 +1,26 @@
 package com.anth1x.ifunnydl;
 
 import static com.anth1x.ifunnydl.fonts.fontBodyText;
-import static com.anth1x.ifunnydl.fonts.fontButton;
 import static com.anth1x.ifunnydl.fonts.fontInput;
 import static com.anth1x.ifunnydl.fonts.fontSubtitle;
 import static com.anth1x.ifunnydl.fonts.fontTitle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.util.Linkify;
 import android.view.Gravity;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.Objects;
 import java.util.Set;
 
@@ -74,16 +72,25 @@ public class DisplayHistoryActivity extends AppCompatActivity {
         TextView bigTitle = findViewById(R.id.titlescool);
         TextView footer = findViewById(R.id.footer);
         TextView explain = findViewById(R.id.explain);
+        TextView tableTitle = findViewById(R.id.tableTitle);
+        TextView tableTitleTimes = findViewById(R.id.tableTitleTimes);
+        TextView gotoother = findViewById(R.id.gotocute);
 
         bigTitle.setTypeface(fontTitle);
         footer.setTypeface(fontBodyText);
-        explain.setTypeface(fontSubtitle);
+        explain.setTypeface(fontSubtitle);  tableTitle.setTypeface(fontSubtitle);   tableTitleTimes.setTypeface(fontSubtitle);
         sendButton.setTypeface(fontInput);
+
         sendButton.setBackgroundColor(buttonBG);
 
         sendButton.setOnClickListener(v -> {
             history.clearHistory();
             initTables();
+        });
+
+        gotoother.setOnClickListener(v -> {
+            Intent intent = new Intent(DisplayHistoryActivity.this, feelingLikeActivity.class);
+            startActivity(intent);
         });
 
         //        Status and nav bar stuff
@@ -94,24 +101,30 @@ public class DisplayHistoryActivity extends AppCompatActivity {
         layout.setPadding(0, statusBarHeight, 0, 0);
         mainFooter.setPadding(0, 0, 0, navigationBarHeight);
     }
+
     public void initTables() {
         urlHistory history = new urlHistory(this);
         urlTable.removeAllViews();
         timeTable.removeAllViews();
         Set<String> urls = history.getURLs();
         Set<String> times = history.getTimes();
+
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        for (int i = 0; i < 40; i++) {
+//            urls.add("https://www.example.com/page" + i);
+//            times.add(new Date().toString());
+//        }
+//        editor.putStringSet(URL_KEY, urls);
+//        editor.putStringSet(TIME_KEY, times);
+//        editor.apply();
+
         if (urls.isEmpty()) {
             TableRow row = new TableRow(this);
             TextView textView = new TextView(this);
             textView.setText("Missing value");
             textView.setTextColor(Color.WHITE);
-            TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(
-                    TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT
-            );
-            layoutParams.gravity = Gravity.RIGHT; // Set the layout gravity to right
-            textView.setLayoutParams(layoutParams); // Set the layout parameters of the TextView
-            textView.setGravity(Gravity.RIGHT); // Set the gravity of the TextView to right
+            textView.setGravity(Gravity.RIGHT);
+            textView.setTypeface(fontBodyText);
             row.addView(textView);
             urlTable.addView(row);
         } else {
@@ -119,8 +132,10 @@ public class DisplayHistoryActivity extends AppCompatActivity {
                 TableRow row = new TableRow(this);
                 TextView textView = new TextView(this);
                 textView.setText(url);
-                textView.setGravity(Gravity.RIGHT);
                 textView.setTextColor(Color.WHITE);
+                textView.setGravity(Gravity.RIGHT);
+                textView.setTypeface(fontBodyText);
+                Linkify.addLinks(textView, Linkify.WEB_URLS);
                 row.addView(textView);
                 urlTable.addView(row);
             }
@@ -131,6 +146,7 @@ public class DisplayHistoryActivity extends AppCompatActivity {
             TextView textView = new TextView(this);
             textView.setText("Missing time value");
             textView.setTextColor(Color.WHITE);
+            textView.setTypeface(fontBodyText);
             row.addView(textView);
             timeTable.addView(row);
         } else {
@@ -139,6 +155,7 @@ public class DisplayHistoryActivity extends AppCompatActivity {
                 TextView textView = new TextView(this);
                 textView.setText(time);
                 textView.setTextColor(Color.WHITE);
+                textView.setTypeface(fontBodyText);
                 row.addView(textView);
                 timeTable.addView(row);
             }

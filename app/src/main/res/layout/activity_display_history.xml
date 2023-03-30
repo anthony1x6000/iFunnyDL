@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/monog" />
+        app:srcCompat="@drawable/ougihistory" />
 
     <LinearLayout
         android:id="@+id/baseRelLayout"
@@ -59,6 +59,13 @@
             android:layout_below="@id/header"
             android:layout_marginTop="54dp">
 
+            <TextView
+                android:id="@+id/sendButton"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="Clear history"
+                android:textColor="#fff" />
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -70,7 +77,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -78,18 +84,24 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tableTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="#fff"
                             android:gravity="right"
-                            android:text="URLs"/>
+                            android:text="URL "/>
 
-                        <TableLayout
-                            android:id="@+id/url_table"
+                        <HorizontalScrollView
                             android:layout_width="match_parent"
-                            android:textColor="#fff"
-                            android:gravity="right"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content">
+
+                            <TableLayout
+                                android:id="@+id/url_table"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#fff"
+                                android:gravity="right"/>
+                        </HorizontalScrollView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -97,31 +109,28 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
-
                         <TextView
+                            android:id="@+id/tableTitleTimes"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="#fff"
                             android:gravity="left"
-                            android:text="Times"/>
-
-                        <TableLayout
-                            android:id="@+id/time_table"
+                            android:text=" Time"/>
+                        <HorizontalScrollView
                             android:layout_width="match_parent"
-                            android:textColor="#fff"
-                            android:gravity="left"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content">
+                            <TableLayout
+                                android:id="@+id/time_table"
+                                android:layout_width="match_parent"
+                                android:textColor="#fff"
+                                android:gravity="left"
+                                android:layout_height="wrap_content"/>
+                        </HorizontalScrollView>
                     </LinearLayout>
+
                 </LinearLayout>
+
             </ScrollView>
-            <TextView
-                android:id="@+id/sendButton"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_below="@id/scrollView"
-                android:gravity="center"
-                android:text="Clear history"
-                android:textColor="#fff" />
         </LinearLayout>
     </LinearLayout>
 
