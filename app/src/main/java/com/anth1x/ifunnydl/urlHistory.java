@@ -15,16 +15,18 @@ import java.util.List;
 
 public class urlHistory {
     private final SharedPreferences sharedPreferences;
+    private final SharedPreferences settings;
     private static final String SHARED_PREFS_NAME = "urlHistory";
     private static final String URL_TIME_KEY = "urlTimes";
 
     public urlHistory(Context context) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+        settings = context.getSharedPreferences("my_preferences", Context.MODE_PRIVATE);
     }
 
     public void addURL(String url) {
 
-        if (!(sharedPreferences.getBoolean("doLogging", true))) {
+        if (!settings.getBoolean("doLogging", true)) {
             System.out.println("Logging disabled.");
             return;
         }
