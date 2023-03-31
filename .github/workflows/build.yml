@@ -48,7 +48,7 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.IFKEYPASS }}
           KEY_PASSWORD: ${{ secrets.IFKEYPASS }}
         run: |
-          jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore mykeystore.jks -storepass $KEYSTORE_PASSWORD -keypass $KEY_PASSWORD iFunnyDL-$CURRENT_DATE.apk ${{ env.KEYALIAS }}
+          jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore mykeystore.jks -storepass $KEYSTORE_PASSWORD -keypass $KEY_PASSWORD iFunnyDL-$CURRENT_DATE.apk ifkeys
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
