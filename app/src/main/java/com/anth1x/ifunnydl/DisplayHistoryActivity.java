@@ -1,6 +1,7 @@
 package com.anth1x.ifunnydl;
 
 import static com.anth1x.ifunnydl.fonts.fontBodyText;
+import static com.anth1x.ifunnydl.fonts.fontButton;
 import static com.anth1x.ifunnydl.fonts.fontInput;
 import static com.anth1x.ifunnydl.fonts.fontSubtitle;
 import static com.anth1x.ifunnydl.fonts.fontTitle;
@@ -79,7 +80,7 @@ public class DisplayHistoryActivity extends AppCompatActivity {
         bigTitle.setTypeface(fontTitle);
         footer.setTypeface(fontBodyText);
         explain.setTypeface(fontSubtitle);  tableTitle.setTypeface(fontSubtitle);   tableTitleTimes.setTypeface(fontSubtitle);
-        sendButton.setTypeface(fontInput);
+        sendButton.setTypeface(fontButton);
 
         sendButton.setBackgroundColor(buttonBG);
 
