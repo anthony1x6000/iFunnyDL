@@ -19,10 +19,10 @@ jobs:
         id: current-date
         run: echo "CURRENT_DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
-#      - name: Decode cutestore
-#        run: |
-#          echo "${{ secrets.IFKEYSTORE }}" | base64 --decode > release-key.jks
-#        shell: bash
+      - name: Decode cutestore
+        run: |
+          echo "${{ secrets.IFKEYSTORE }}" | base64 --decode > Jkey.jks
+        shell: bash
 
       - name: Print date
         run: echo $CURRENT_DATE
@@ -42,6 +42,13 @@ jobs:
       - name: Move + Rename APK
         run: |
           mv app/build/outputs/apk/debug/app-debug.apk iFunnyDL-$CURRENT_DATE.apk
+
+      - name: Sign APK
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.IFKEYPASS }}
+          KEY_PASSWORD: ${{ secrets.IFKEYPASS }}
+        run: |
+          jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore mykeystore.jks -storepass $KEYSTORE_PASSWORD -keypass $KEY_PASSWORD iFunnyDL-$CURRENT_DATE.apk ${{ env.KEYALIAS }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
