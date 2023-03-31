@@ -1,10 +1,10 @@
 package com.anth1x.ifunnydl;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.VideoView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 

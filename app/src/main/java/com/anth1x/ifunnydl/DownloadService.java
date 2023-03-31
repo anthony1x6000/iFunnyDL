@@ -113,7 +113,6 @@ public class DownloadService extends IntentService {
         try {
             Element mediaLink;
             Document doc = Jsoup.connect(finalURL).timeout(10 * 1000).get();
-            System.out.println("Entered try");
 
             if (mHandle == 0) {
                 System.out.println("Handling as picture.");
