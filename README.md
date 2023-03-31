@@ -13,7 +13,7 @@ You can see some of these features in the [videos below](https://github.com/anth
 [Check out releases.](https://github.com/anthony1x6000/iFunnyDL/releases) 
 
 If you want the latest unreleased builds, download the latest build by going to [actions](https://github.com/anthony1x6000/iFunnyDL/actions) and checking out the artifacts from the last successful build. \
-Or, you can use [nightly.link](https://nightly.link/anthony1x6000/iFunnyDL/workflows/build/main/iFunnyDLzip.zip) to download the latest build.
+Or, you can use [nightly.link](https://nightly.link/anthony1x6000/iFunnyDL/workflows/build/main/iFunnyDL.zip) to download the latest build.
 
 ## Compatibility
 Verified compatibility with Android 6, 10, 13. \
