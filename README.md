@@ -1,6 +1,6 @@
 # iFunny Video Downloader app
 Downloads ifunny posts. \
-Just share a post through the iFunny app to this app and then it'll download the content to ``/Pictures/iFunnyDL`` or ``/Pictures/iFunny``. \
+Just share a post through the iFunny app to this app and then it'll download the content to ``/Pictures/iFunnyDL`` or ``/Pictures/iFunny``.
 ## Features
 - **Automatically removes watermarks.** 
 - Supports Image, GIF, and **Video** downloads.  
