@@ -44,14 +44,7 @@ public class CropService extends IntentService {
 
         String inputPath = intent.getStringExtra("input_path");
         File inputFile = new File(inputPath);
-//        File inputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), tmpDest + "rraahh");
         String filename = inputFile.getName();
-//        try {
-//            inputStream = new FileInputStream(inputFile);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-
 
         if (filename.endsWith(".jpg")) {
             Bitmap img = BitmapFactory.decodeFile(inputFile.getAbsolutePath());
@@ -59,16 +52,14 @@ public class CropService extends IntentService {
             int length = img.getHeight();
             int curr_y = length - 1;
 
-            // While color difference is less than threshold, move up and decrease Y height
             while (colorDifference(img.getPixel(0, curr_y), img.getPixel(0, length - 1)) < THRESHOLD) {
                 curr_y = curr_y - 1;
             }
             int watermark_size = length - curr_y;
 
-            // For possible bad crops since the average watermark size is 21 pixels or less
             Bitmap cropped;
             if (watermark_size > 21) {
-                System.out.println("Skipped a file, watermark something something");
+                System.out.println("Skipped a file.");
                 return;
             } else {
                 cropped = Bitmap.createBitmap(img, 0, 0, width, length - watermark_size);
@@ -96,7 +87,7 @@ public class CropService extends IntentService {
 
     }
 
-    // Get color difference
+
     private static double colorDifference(int pixel1, int pixel2) {
         int red1 = Color.red(pixel1);
         int green1 = Color.green(pixel1);
