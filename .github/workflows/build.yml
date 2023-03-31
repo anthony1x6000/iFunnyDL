@@ -23,8 +23,6 @@ jobs:
         run: |
           echo "${{ secrets.IFKEYSTORE }}" | base64 --decode > release-key.jks
         shell: bash
-        env:
-          KEYSTOREFILE: release-key.jks
 
       - name: Print date
         run: echo $CURRENT_DATE
