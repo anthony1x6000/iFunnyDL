@@ -51,7 +51,6 @@ public class DownloadService extends IntentService {
     }
 
     public void downloadWith(String fileURL, boolean sendToPictures) {
-
         File dir = null;
         String imgFileFormat;
         System.out.println("Starting fileURL = " + fileURL);
@@ -59,7 +58,7 @@ public class DownloadService extends IntentService {
         if (sendToPictures) { // picture DIR
             int index = fileURL.lastIndexOf(".");
             imgFileFormat = "." + fileURL.substring(index + 1);
-            System.out.println("imgFileFOrmat = " + imgFileFormat);
+            System.out.println("imgFileFormat = " + imgFileFormat);
             if (imgAsiFunnyFormat) {
                 fileName = fileURL.replaceAll(".*/images/", "");
             } else {
@@ -68,7 +67,7 @@ public class DownloadService extends IntentService {
             System.out.println("Finalname = " + fileName);
 
             dir = tmpDest;
-            System.out.println("sedn 2 Directory = " + dir);
+            System.out.println("send to Directory = " + dir);
         } else if (!sendToPictures) { // video DIR
             fileName = (getFileName() + ".mp4");
             System.out.println("Finalname = " + fileName);
@@ -93,31 +92,48 @@ public class DownloadService extends IntentService {
         }
     }
 
-    public void downloadMeth(String finalURL, Boolean doPicture) {
+    public void downloadMeth(String finalURL, int mHandle) {
         try {
             Element mediaLink;
             Document doc = Jsoup.connect(finalURL).timeout(10 * 1000).get();
-            boolean sendToPictures;
-            if (doPicture) {
+            System.out.println("Entered try");
+
+            if (mHandle == 0) {
+                System.out.println("Handling as picture.");
                 mediaLink = doc.select("img[src~=(?i)\\.(webp|png|jpe?g|gif)]").first();
                 if (mediaLink != null) {
                     String mediaRL = mediaLink.attr("src");
                     System.out.println(mediaRL);
-                    sendToPictures = true;
-                    downloadWith(mediaRL, sendToPictures); // 2: send to iFunny', the main iFunny pictures folder.
+                    downloadWith(mediaRL, true);
+                } else {
+                    System.out.println("media link is null.");
                 }
-            } else {
+            } else if (mHandle == 1) {
+                System.out.println("Handling as gif.");
+                mediaLink = doc.select("link[rel='preload'][href$='.gif']").first();
+                if (mediaLink != null) {
+                    String mediaRL = mediaLink.attr("href");
+                    System.out.println(mediaRL);
+                    downloadWith(mediaRL, true);
+                } else {
+                    System.out.println("media link is null.");
+                    System.out.println("Doc = " + doc);
+                }
+            } else if (mHandle == 2) {
+                System.out.println("Handling as video.");
                 mediaLink = doc.select("video[data-src~=(?i)\\.mp4]").first();
                 if (mediaLink != null) {
                     String mediaRL = mediaLink.attr("data-src");
                     System.out.println(mediaRL);
-                    sendToPictures = false;
-                    downloadWith(mediaRL, sendToPictures); // 1: send to iFunnyDL - videos.
+                    downloadWith(mediaRL, false);
+                } else {
+                    System.out.println("media link is null.");
                 }
+            } else {
+                System.out.println("Unspecified handling");
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
@@ -132,7 +148,17 @@ public class DownloadService extends IntentService {
         System.out.println("handLing intent");
         System.out.println("finalURL = " + finalURL);
         if (finalURL != null) {
-            downloadMeth(finalURL, finalURL.contains("picture"));
+            System.out.println("Not null, handling.");
+            if (finalURL.contains("picture")) {
+                System.out.println("URL is Picture");
+                downloadMeth(finalURL, 0);
+            } else if (finalURL.contains("gif")) {
+                System.out.println("URL is GIF");
+                downloadMeth(finalURL, 1);
+            } else {
+                System.out.println("URL is other, video.");
+                downloadMeth(finalURL, 2);
+            }
         } else {
             System.out.println("URL is " + finalURL + " | Probably null.");
         }
