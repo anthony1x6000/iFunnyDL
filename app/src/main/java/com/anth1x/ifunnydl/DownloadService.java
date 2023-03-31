@@ -1,5 +1,6 @@
 package com.anth1x.ifunnydl;
 
+import static com.anth1x.ifunnydl.globalDefaults.GIFoutputDirectory;
 import static com.anth1x.ifunnydl.globalDefaults.tmpDest;
 
 import android.annotation.SuppressLint;
@@ -49,13 +50,13 @@ public class DownloadService extends IntentService {
         return finalName;
     }
 
-    public void downloadWith(String fileURL, boolean sendToPictures) {
-        File dir;
+    public void downloadWith(String fileURL, int handleSend) {
+        File dir = null;
         String imgFileFormat;
         System.out.println("Starting fileURL = " + fileURL);
 
         String fileName;
-        if (sendToPictures) { // picture DIR
+        if (handleSend == 0) { // picture DIR
             int index = fileURL.lastIndexOf(".");
             imgFileFormat = "." + fileURL.substring(index + 1);
             System.out.println("imgFileFormat = " + imgFileFormat);
@@ -68,7 +69,21 @@ public class DownloadService extends IntentService {
 
             dir = tmpDest;
             System.out.println("send to Directory = " + dir);
-        } else { // video DIR
+        } else if (handleSend == 1) {
+            int index = fileURL.lastIndexOf(".");
+            imgFileFormat = "." + fileURL.substring(index + 1);
+            System.out.println("imgFileFormat = " + imgFileFormat);
+            if (imgAsiFunnyFormat) {
+                fileName = fileURL.replaceAll(".*/images/", "");
+            } else {
+                fileName = (getFileName() + imgFileFormat);
+            }
+            System.out.println("Finalname = " + fileName);
+
+            dir = GIFoutputDirectory;
+            System.out.println("send to Directory = " + dir);
+        } else {
+            // video DIR
             fileName = (getFileName() + ".mp4");
             System.out.println("Finalname = " + fileName);
             String vidDest = "/iFunnyDL";
@@ -82,14 +97,16 @@ public class DownloadService extends IntentService {
         if (DMNotif) {
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         }
+
         DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
 
-        if (sendToPictures) {
+        if (handleSend == 0) {
             System.out.println("sending to pictures. asking for fileListener");
             Intent intent = new Intent(this, fileListener.class);
             startService(intent);
         }
+
     }
 
     public void downloadMeth(String finalURL, int mHandle) {
@@ -104,17 +121,19 @@ public class DownloadService extends IntentService {
                 if (mediaLink != null) {
                     String mediaRL = mediaLink.attr("src");
                     System.out.println(mediaRL);
-                    downloadWith(mediaRL, true);
+                    downloadWith(mediaRL, 0);
                 } else {
                     System.out.println("media link is null.");
                 }
             } else if (mHandle == 1) {
                 System.out.println("Handling as gif.");
+                DMNotif = false;
+                System.out.println("DMNotif set to false temporarily.");
                 mediaLink = doc.select("link[rel='preload'][href$='.gif']").first();
                 if (mediaLink != null) {
                     String mediaRL = mediaLink.attr("href");
                     System.out.println(mediaRL);
-                    downloadWith(mediaRL, true);
+                    downloadWith(mediaRL, 1);
                 } else {
                     System.out.println("media link is null.");
                     System.out.println("Doc = " + doc);
@@ -125,7 +144,7 @@ public class DownloadService extends IntentService {
                 if (mediaLink != null) {
                     String mediaRL = mediaLink.attr("data-src");
                     System.out.println(mediaRL);
-                    downloadWith(mediaRL, false);
+                    downloadWith(mediaRL, 2);
                 } else {
                     System.out.println("media link is null.");
                 }
