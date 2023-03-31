@@ -13,8 +13,8 @@ If you want the latest unreleased builds, download the latest build by going to 
 Or, you can use [nightly.link](https://nightly.link/anthony1x6000/iFunnyDL/workflows/build/main/iFunnyDLzip.zip) to download the latest build.
 
 ## Compatibility
-Verified compatibility with Android 6, 10, 13. 
-Should work 100% with Android 10+ 
+Verified compatibility with Android 6, 10, 13. \
+Best experience with Android 10+
 
 ## Usage
 Download the APK, install it, and share an iFunny post to the app to download. 
