@@ -61,8 +61,10 @@ public class SettingsActivity extends AppCompatActivity {
         TextView gotoother = findViewById(R.id.gotocute);
         TextView footer = findViewById(R.id.footer);
 
-        int firstBttnBG = Color.argb((int) (0.45 * 255), 86, 102, 162);
-        int secondBttnBG = Color.argb((int) (0.35 * 255), 86, 102, 162);
+        int firstBttnBG = Color.argb((int) (0.63 * 255), 17, 33, 59);
+        int secondBttnBG = Color.argb((int) (0.45 * 255), 17, 33, 59);
+        int inputBG = Color.argb((int) (0.45 * 255), 17, 33, 63);
+        inputFileName.setBackgroundColor(inputBG);
 
         sendButton.setOnClickListener(v -> {
             String fileName = inputFileName.getText().toString();

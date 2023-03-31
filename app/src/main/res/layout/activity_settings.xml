@@ -64,7 +64,7 @@
                     android:id="@+id/inputFileName"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:background="@drawable/input"
+                    android:background="#00ff0000"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:text="Change file ending (-{iFunny}.mp4)"
