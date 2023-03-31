@@ -26,10 +26,12 @@ Download the APK, install it, and share an iFunny post to the app to download.
   <tr>
     <th>Video downloading</th>
     <th>Image downloading, autocropping, and settings</th>
+    <th>Download Log</th>
   </tr>
   <tr>
     <td><a href="https://imgur.com/KhgcT8b"><img width=350 src="https://i.imgur.com/72w0sI0.png" /></a></td>
     <td><a href="https://imgur.com/rsARcO0"><img width=350 src="https://i.imgur.com/UenbhS3.png" /></a></td>
+    <td><img width=350 src="https://user-images.githubusercontent.com/33004321/229006556-282cc7de-42a0-48a4-858f-3fd06b46a06f.png" /></td>
   </tr>
 </table>
 
