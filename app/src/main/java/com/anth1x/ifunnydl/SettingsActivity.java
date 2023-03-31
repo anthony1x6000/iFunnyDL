@@ -123,8 +123,27 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        TextView prefLogsID = findViewById(R.id.changeLogPref);
+        AtomicBoolean doLoggingPref = new AtomicBoolean(sharedPref.getBoolean("doLogging", true));
+        if (doLoggingPref.get()) {
+            prefLogsID.setText("Press to disable download logs");
+        } else {
+            prefLogsID.setText("Press to enable download logs");
+        }
+        prefLogsID.setOnClickListener(v -> {
+            doLoggingPref.set(!doLoggingPref.get());
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("doLogging", doLoggingPref.get());
+            editor.apply();
+
+            if (doLoggingPref.get()) {
+                prefLogsID.setText("Press to disable download logs");
+            } else {
+                prefLogsID.setText("Press to enable download logs");
+            }
+        });
+
         gotoother.setOnClickListener(v -> {
-//            Intent intent = new Intent(SettingsActivity.this, feelingLikeActivity.class);
             Intent intent = new Intent(SettingsActivity.this, DisplayHistoryActivity.class);
             startActivity(intent);
         });
@@ -142,7 +161,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).hide(); // hide header with app title
 
-        TextView[] buttons = {sendButton, notifPref, prefImgFormattingID};
+        TextView[] buttons = {sendButton, notifPref, prefLogsID, prefImgFormattingID};
         for (int i = 0; i < buttons.length; i++) {
             buttons[i].setTypeface(fontButton);
             if (i % 2 == 0) {

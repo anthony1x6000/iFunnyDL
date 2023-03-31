@@ -19,8 +19,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class DisplayHistoryActivity extends AppCompatActivity {
 
@@ -101,10 +101,9 @@ public class DisplayHistoryActivity extends AppCompatActivity {
         urlHistory history = new urlHistory(this);
         urlTable.removeAllViews();
         timeTable.removeAllViews();
-        Set<String> urls = history.getURLs();
-        Set<String> times = history.getTimes();
+        List<UrlTime> urlTimes = history.getUrlTimes();
 
-        if (urls.isEmpty()) {
+        if (urlTimes.isEmpty()) {
             TableRow row = new TableRow(this);
             TextView textView = new TextView(this);
             textView.setText("Missing value");
@@ -113,33 +112,29 @@ public class DisplayHistoryActivity extends AppCompatActivity {
             textView.setTypeface(fontBodyText);
             row.addView(textView);
             urlTable.addView(row);
-        } else {
-            for (String url : urls) {
-                TableRow row = new TableRow(this);
-                TextView textView = new TextView(this);
-                textView.setText(url);
-                textView.setTextColor(Color.WHITE);
-                textView.setGravity(Gravity.RIGHT);
-                textView.setTypeface(fontBodyText);
-                Linkify.addLinks(textView, Linkify.WEB_URLS);
-                row.addView(textView);
-                urlTable.addView(row);
-            }
-        }
 
-        if (times.isEmpty()) {
-            TableRow row = new TableRow(this);
-            TextView textView = new TextView(this);
+            row = new TableRow(this);
+            textView = new TextView(this);
             textView.setText("Missing value");
             textView.setTextColor(Color.WHITE);
             textView.setTypeface(fontBodyText);
             row.addView(textView);
             timeTable.addView(row);
         } else {
-            for (String time : times) {
+            for (UrlTime urlTime : urlTimes) {
                 TableRow row = new TableRow(this);
                 TextView textView = new TextView(this);
-                textView.setText(time);
+                textView.setText(urlTime.getUrl());
+                textView.setTextColor(Color.WHITE);
+                textView.setGravity(Gravity.RIGHT);
+                textView.setTypeface(fontBodyText);
+                Linkify.addLinks(textView, Linkify.WEB_URLS);
+                row.addView(textView);
+                urlTable.addView(row);
+
+                row = new TableRow(this);
+                textView = new TextView(this);
+                textView.setText(urlTime.getTime());
                 textView.setTextColor(Color.WHITE);
                 textView.setTypeface(fontBodyText);
                 row.addView(textView);
