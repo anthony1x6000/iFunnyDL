@@ -23,6 +23,8 @@ jobs:
         run: |
           echo "${{ secrets.IFKEYSTORE }}" | base64 --decode > release-key.jks
         shell: bash
+        env:
+          KEYSTOREFILE: my-release-key.jks
 
       - name: Print date
         run: echo $CURRENT_DATE
@@ -36,9 +38,6 @@ jobs:
       - name: Allow execute Gradlew
         run: chmod +x gradlew
 
-      - name: Build with Gradle
-        run: ./gradlew assembleDebug
-
       - name: Build and sign APK
         run: ./gradlew assembleRelease
         env:
@@ -46,6 +45,9 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.IFKEYPASS }}
           KEY_ALIAS: ${{ secrets.KEYALIAS }}
           KEY_PASSWORD: ${{ secrets.IFKEYPASS }}
+
+      - name: Build with Gradle
+        run: ./gradlew assembleDebug
 
       - name: Move + Rename APK
         run: |
