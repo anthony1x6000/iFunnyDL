@@ -30,6 +30,8 @@ Download the APK, install it, and share an iFunny post to the app to download.
   </tr>
 </table>
 
+## Credit
+- [iFunny-Cropper](https://github.com/switchswap/iFunny-Cropper) by [switchswap](https://github.com/switchswap) helped me figure out crop service.
 <!-- ## Known bugs -->
 <!-- The following error message comes up after the app is done cropping an image. This is caused by the app not asking FileInputStream to close. 
 ```agsl
