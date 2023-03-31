@@ -2,14 +2,11 @@ package com.anth1x.ifunnydl;
 
 import static com.anth1x.ifunnydl.fonts.fontBodyText;
 import static com.anth1x.ifunnydl.fonts.fontButton;
-import static com.anth1x.ifunnydl.fonts.fontInput;
 import static com.anth1x.ifunnydl.fonts.fontSubtitle;
 import static com.anth1x.ifunnydl.fonts.fontTitle;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.util.Linkify;
@@ -27,9 +24,6 @@ import java.util.Set;
 
 public class DisplayHistoryActivity extends AppCompatActivity {
 
-    private SharedPreferences sharedPreferences;
-    private static final String URL_KEY = "URL_KEY";
-    private static final String TIME_KEY = "TIME_KEY";
     private TableLayout urlTable;
     private TableLayout timeTable;
 
@@ -60,7 +54,6 @@ public class DisplayHistoryActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
         urlTable = findViewById(R.id.url_table);
         timeTable = findViewById(R.id.time_table);
 
@@ -103,21 +96,13 @@ public class DisplayHistoryActivity extends AppCompatActivity {
         mainFooter.setPadding(0, 0, 0, navigationBarHeight);
     }
 
+    @SuppressLint({"SetTextI18n", "RtlHardcoded"})
     public void initTables() {
         urlHistory history = new urlHistory(this);
         urlTable.removeAllViews();
         timeTable.removeAllViews();
         Set<String> urls = history.getURLs();
         Set<String> times = history.getTimes();
-
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        for (int i = 0; i < 40; i++) {
-//            urls.add("https://www.example.com/page" + i);
-//            times.add(new Date().toString());
-//        }
-//        editor.putStringSet(URL_KEY, urls);
-//        editor.putStringSet(TIME_KEY, times);
-//        editor.apply();
 
         if (urls.isEmpty()) {
             TableRow row = new TableRow(this);

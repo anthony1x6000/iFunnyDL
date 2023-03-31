@@ -27,7 +27,6 @@ public class fileListener extends Service {
     private void registerFileListener() {
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         fileListener = new BroadcastReceiver() {
-            private String inputImageDestination;
 
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -41,7 +40,7 @@ public class fileListener extends Service {
                     if (cursor.moveToFirst()) {
                         int statusIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
                         if (DownloadManager.STATUS_SUCCESSFUL == cursor.getInt(statusIndex)) {
-                            inputImageDestination = tmpDestString + "/";
+                            String inputImageDestination = tmpDestString + "/";
                             int uriIndex = cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
                             String downloadedFilePath = cursor.getString(uriIndex);
                             String fileName = downloadedFilePath.substring(downloadedFilePath.lastIndexOf('/') + 1);

@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.os.Environment;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -114,14 +113,6 @@ public class CropService extends IntentService {
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        try {
-//            inputStream.close();
-//        } catch (IOException e) {
-//            System.out.println("ALWAYS DOES THIS ERROR. dont worry about it.");
-//            e.printStackTrace();
-//            System.out.println("ALWAYS DOES THAT ERROR. dont worry about it.");
-//            // TODO: fix why FileInputStream is so dog shit ... or find a good alternative (better idea)
-//        }
         System.out.println("Killed Crop Service.");
     }
 }

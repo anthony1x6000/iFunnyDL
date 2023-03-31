@@ -28,7 +28,6 @@ public class DownloadService extends IntentService {
     }
 
     private String fileNamingScheme;
-    private String fileName;
     private boolean DMNotif;
     private boolean imgAsiFunnyFormat;
 
@@ -51,10 +50,11 @@ public class DownloadService extends IntentService {
     }
 
     public void downloadWith(String fileURL, boolean sendToPictures) {
-        File dir = null;
+        File dir;
         String imgFileFormat;
         System.out.println("Starting fileURL = " + fileURL);
 
+        String fileName;
         if (sendToPictures) { // picture DIR
             int index = fileURL.lastIndexOf(".");
             imgFileFormat = "." + fileURL.substring(index + 1);
@@ -68,7 +68,7 @@ public class DownloadService extends IntentService {
 
             dir = tmpDest;
             System.out.println("send to Directory = " + dir);
-        } else if (!sendToPictures) { // video DIR
+        } else { // video DIR
             fileName = (getFileName() + ".mp4");
             System.out.println("Finalname = " + fileName);
             String vidDest = "/iFunnyDL";
