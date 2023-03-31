@@ -19,6 +19,11 @@ jobs:
         id: current-date
         run: echo "CURRENT_DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
+      - name: Decode cutestore
+        run: |
+          echo "${{ secrets.IFKEYSTORE }}" | base64 --decode > release-key.jks
+        shell: bash
+
       - name: Print date
         run: echo $CURRENT_DATE
 
@@ -34,13 +39,29 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleDebug
 
-      - name: Move + Rename APK
-        run: mv app/build/outputs/apk/debug/app-debug.apk iFunnyDL-$CURRENT_DATE.apk
+      - name: Build and sign APK
+        run: ./gradlew assembleRelease
+        env:
+          KEYSTORE_FILE: release-key.jks
+          KEYSTORE_PASSWORD: ${{ secrets.IFKEYPASS }}
+          KEY_ALIAS: ${{ secrets.KEYALIAS }}
+          KEY_PASSWORD: ${{ secrets.IFKEYPASS }}
 
-      - name: Upload APK as artifact
+      - name: Move + Rename APK
+        run: |
+          mv app/build/outputs/apk/debug/app-debug.apk iFunnyDL-Debug-$CURRENT_DATE.apk
+          mv app/build/outputs/apk/release/app-release.apk iFunnyDL-$CURRENT_DATE.apk
+
+      - name: Upload Debug artifact
         uses: actions/upload-artifact@v3
         with:
-          name: iFunnyDLzip
+          name: iFunnyDL-Debug
+          path: iFunnyDL-Debug-${{ env.CURRENT_DATE }}.apk
+
+      - name: Upload Release artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: iFunnyDL-Release
           path: iFunnyDL-${{ env.CURRENT_DATE }}.apk
 
       - name: Release APK
