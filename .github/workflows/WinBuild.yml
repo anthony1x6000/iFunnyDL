@@ -29,8 +29,11 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Build with Gradle
-        run: .\gradlew :app:assembleDebug
+      - name: Figure out structure
+        run: dir
+
+#      - name: Build with Gradle
+#        run: .\gradlew :app:assembleDebug
 
       - name: Move + Rename APK
         run: |
