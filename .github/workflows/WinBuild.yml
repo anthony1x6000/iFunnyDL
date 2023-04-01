@@ -32,12 +32,12 @@ jobs:
       - name: Figure out structure
         run: dir
 
-#      - name: Build with Gradle
-#        run: .\gradlew :app:assembleDebug
+      - name: Build with Gradle
+        run: .\gradlew :app:assembleDebug
 
       - name: Move + Rename APK
         run: |
-          move app\build\outputs\apk\debug\app-debug.apk iFunnyDL-$env:CURRENT_DATE.apk
+          move app\build\outputs\apk\debug\app-debug.apk iFunnyDL-${{ env.CURRENT_DATE }}.apk
         shell: cmd
 
       - name: Upload artifact
