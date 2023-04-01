@@ -1,23 +1,24 @@
 name: Build app
 
 on:
-#  push:
-#    branches:
-#      - main
-#  release:
-#    types: [created]
+  push:
+    branches:
+      - main
+  release:
+    types: [created]
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Get current date
         id: current-date
-        run: echo "CURRENT_DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
+        run: echo "CURRENT_DATE=$(date /T)" >> $env:GITHUB_ENV
+        shell: powershell
 
       - name: Print date
         run: echo $CURRENT_DATE
@@ -28,15 +29,13 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Allow execute Gradlew
-        run: chmod +x gradlew
-
       - name: Build with Gradle
-        run: ./gradlew :app:assembleDebug
+        run: .\gradlew :app:assembleDebug
 
       - name: Move + Rename APK
         run: |
-          mv app/build/outputs/apk/debug/app-debug.apk iFunnyDL-$CURRENT_DATE.apk
+          move app\build\outputs\apk\debug\app-debug.apk iFunnyDL-$env:CURRENT_DATE.apk
+        shell: cmd
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
