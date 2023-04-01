@@ -1,4 +1,4 @@
-name: Build app
+name: Build app windows
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
 
       - name: Get current date
         id: current-date
-        run: echo "CURRENT_DATE=$(date /T)" >> $env:GITHUB_ENV
+        run: echo "CURRENT_DATE=$(Get-Date -Format 'yyyyMMdd')" | Out-File -FilePath $env:GITHUB_ENV -Append
         shell: powershell
 
       - name: Print date
