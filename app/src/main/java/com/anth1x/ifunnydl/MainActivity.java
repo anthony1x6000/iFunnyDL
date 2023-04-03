@@ -5,6 +5,7 @@ import static com.anth1x.ifunnydl.fonts.fontButton;
 import static com.anth1x.ifunnydl.fonts.fontInput;
 import static com.anth1x.ifunnydl.fonts.fontSubtitle;
 import static com.anth1x.ifunnydl.fonts.fontTitle;
+import static com.anth1x.ifunnydl.globalDefaults.tmpDest;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         fonts.init(this);
         urlHistory history = new urlHistory(this);
+
+        LogWriter.writeLog(String.valueOf(tmpDest));
 
         // Give permissions
         String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
