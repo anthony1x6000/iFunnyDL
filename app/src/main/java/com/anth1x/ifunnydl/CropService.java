@@ -32,6 +32,7 @@ public class CropService extends IntentService {
             }
         }
         tmpDest.delete();
+        System.out.println("Deleted tmpDest");
     }
 
     @Override

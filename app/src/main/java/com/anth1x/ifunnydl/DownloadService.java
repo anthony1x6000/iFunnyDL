@@ -101,12 +101,14 @@ public class DownloadService extends IntentService {
         DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
 
+        System.out.println("Seemed to download well. Deleting temp directory for logs.");
+        CropService.deleteDirectory();
+
         if (handleSend == 0) {
             System.out.println("sending to pictures. asking for fileListener");
             Intent intent = new Intent(this, fileListener.class);
             startService(intent);
         }
-
     }
 
     public void downloadMeth(String finalURL, int mHandle) {
