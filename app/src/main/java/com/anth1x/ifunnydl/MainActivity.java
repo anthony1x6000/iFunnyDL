@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
             sendButton.setOnClickListener(view -> {
                 initShare = inputURL.getText().toString();
-                if (!initShare.isEmpty() && initShare.contains("ifunny")) {
+                if (!initShare.isEmpty() && initShare.contains("ifunny.co")) {
                     System.out.println("Send initshare = " + initShare);
                     history.addURL(initShare);
 
