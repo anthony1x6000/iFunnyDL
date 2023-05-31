@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
         }
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("Created!!!!");

@@ -97,14 +97,14 @@
                     android:text="Enable/Disable download logs"
                     android:textColor="#fff" />
 
-                <TextView
-                    android:id="@+id/changeTelemetryPref"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_below="@id/changeLogPref"
-                    android:gravity="center"
-                    android:text="Enable/Disable Telemetry"
-                    android:textColor="#fff" />
+<!--                <TextView-->
+<!--                    android:id="@+id/changeTelemetryPref"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="35dp"-->
+<!--                    android:layout_below="@id/changeLogPref"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="Enable/Disable Telemetry"-->
+<!--                    android:textColor="#fff" />-->
 
                 <TextView
                     android:id="@+id/changeImageFormatting"
