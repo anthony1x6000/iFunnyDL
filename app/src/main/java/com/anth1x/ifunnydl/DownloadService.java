@@ -1,6 +1,7 @@
 package com.anth1x.ifunnydl;
 
 import static com.anth1x.ifunnydl.globalDefaults.GIFoutputDirectory;
+import static com.anth1x.ifunnydl.globalDefaults.teledestString;
 import static com.anth1x.ifunnydl.globalDefaults.tmpDest;
 
 import android.annotation.SuppressLint;
@@ -156,9 +157,22 @@ public class DownloadService extends IntentService {
             throw new RuntimeException(ex);
         }
     }
-
+    public void startTelemetry() {
+        SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
+        boolean doTelemetry = sharedPref.getBoolean("doTelemetry", Boolean.parseBoolean("true"));
+        System.out.println("doing tel?" + doTelemetry);
+        if (doTelemetry) {
+            System.out.println("Writing log to " + teledestString);
+            Intent telintent = new Intent(this, LogWriterService.class);
+            telintent.putExtra(LogWriterService.EXTRA_DEST, teledestString);
+            startService(telintent);
+        } else {
+            System.out.println("no telemetry.. thats good sometimes. BUT I NEED THE LOGS CAUSE THIS APP CRASHES");
+        }
+    }
     @Override
     protected void onHandleIntent(Intent intent) {
+        startTelemetry();
         SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
         imgAsiFunnyFormat = sharedPref.getBoolean("imgAsiFunnyFormat", Boolean.parseBoolean("true"));
         fileNamingScheme = sharedPref.getString("fileName", "iFunny");

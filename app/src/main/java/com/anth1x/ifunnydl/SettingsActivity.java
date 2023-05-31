@@ -144,6 +144,27 @@ public class SettingsActivity extends AppCompatActivity {
                 prefLogsID.setText("Press to enable download logs");
             }
         });
+// tel
+        TextView prefTelID = findViewById(R.id.changeTelemetryPref);
+        AtomicBoolean doTelPref = new AtomicBoolean(sharedPref.getBoolean("doTelemetry", true));
+        if (doTelPref.get()) {
+            prefTelID.setText("Press to disable telemetry");
+        } else {
+            prefTelID.setText("Press to enable telemetry");
+        }
+        prefTelID.setOnClickListener(v -> {
+            doTelPref.set(!doTelPref.get());
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("prefdoTel", doTelPref.get());
+            editor.apply();
+            System.out.println("tel = " + doTelPref.get());
+
+            if (doTelPref.get()) {
+                prefTelID.setText("Press to disable telemetry");
+            } else {
+                prefTelID.setText("Press to enable telemetry");
+            }
+        });
 
         gotoother.setOnClickListener(v -> {
             Intent intent = new Intent(SettingsActivity.this, DisplayHistoryActivity.class);
@@ -163,7 +184,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).hide(); // hide header with app title
 
-        TextView[] buttons = {sendButton, notifPref, prefLogsID, prefImgFormattingID};
+        TextView[] buttons = {sendButton, notifPref, prefLogsID, prefTelID, prefImgFormattingID};
         for (int i = 0; i < buttons.length; i++) {
             buttons[i].setTypeface(fontButton);
             if (i % 2 == 0) {

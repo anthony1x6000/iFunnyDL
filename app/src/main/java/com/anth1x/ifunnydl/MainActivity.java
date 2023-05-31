@@ -5,12 +5,14 @@ import static com.anth1x.ifunnydl.fonts.fontButton;
 import static com.anth1x.ifunnydl.fonts.fontInput;
 import static com.anth1x.ifunnydl.fonts.fontSubtitle;
 import static com.anth1x.ifunnydl.fonts.fontTitle;
-import static com.anth1x.ifunnydl.globalDefaults.tmpDest;
+import static com.anth1x.ifunnydl.globalDefaults.teledestString;
+import static com.anth1x.ifunnydl.globalDefaults.tmpDestString;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -60,15 +62,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("Created!!!!");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fonts.init(this);
         urlHistory history = new urlHistory(this);
-
-        LogWriter.writeLog(String.valueOf(tmpDest));
 
         // Give permissions
         String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};

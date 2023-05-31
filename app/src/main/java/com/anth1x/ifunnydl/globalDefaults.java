@@ -6,8 +6,13 @@ import java.io.File;
 
 public class globalDefaults {
     public static final File tmpDest = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunnyTMP");
+
+    public static final File teledest = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunnyDLTele");
+
     static final File GIFoutputDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunny/");
     public static final String tmpDestString = String.valueOf(tmpDest);
+    public static final String teledestString = String.valueOf(teledest);
+
 
 //    public static void init(Context context) {
 //        tmpDest = new File(context.getCacheDir(), "iFunnyTMP");
