@@ -24,9 +24,9 @@ Download the APK, install it, and share an iFunny post to the app to download.
 ## Video tutorials
 <table>
   <tr>
-    <th id=videoDL>Video downloading</th>
-    <th id=imgDL>Image downloading, autocropping, and settings</th>
-    <th id=logs>Download Log</th>
+    <th id="videoDL">Video downloading</th>
+    <th id="imgDL">Image downloading, autocropping, and settings</th>
+    <th id="logs">Download Log</th>
   </tr>
   <tr>
     <td><a href="https://imgur.com/KhgcT8b"><img width=350 src="https://i.imgur.com/72w0sI0.png" /></a></td>
@@ -34,7 +34,7 @@ Download the APK, install it, and share an iFunny post to the app to download.
     <td><img width=350 src="https://user-images.githubusercontent.com/33004321/229006556-282cc7de-42a0-48a4-858f-3fd06b46a06f.png" /></td>
   </tr>
   <tr>
-    <th id=usage>Battery Usage</th>
+    <th id="batusage">Battery Usage</th>
   </tr>
   <tr>
     <td><a href="https://imgur.com/FpwwmSR"><img width=350 src="https://i.imgur.com/QxmFQfe.png" /></a></td>
