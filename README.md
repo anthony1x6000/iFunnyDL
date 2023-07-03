@@ -34,6 +34,9 @@ Download the APK, install it, and share an iFunny post to the app to download.
     <td><img width=350 src="https://user-images.githubusercontent.com/33004321/229006556-282cc7de-42a0-48a4-858f-3fd06b46a06f.png" /></td>
   </tr>
   <tr>
+    <th>Battery Usage</th>
+  </tr>
+  <tr>
     <td><a href="https://imgur.com/FpwwmSR"><img width=350 src="https://i.imgur.com/QxmFQfe.png" /></a></td>
   </tr>
 </table>
