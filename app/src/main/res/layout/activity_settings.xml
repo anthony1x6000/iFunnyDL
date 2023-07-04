@@ -79,47 +79,59 @@
                     android:text="Apply"
                     android:textColor="#fff" />
 
-                <TextView
-                    android:id="@+id/changeNotifPref"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_below="@id/sendButton"
-                    android:gravity="center"
-                    android:text="Press to modify download notifications"
-                    android:textColor="#fff" />
-
-                <TextView
-                    android:id="@+id/changeLogPref"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/textNotif"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Disable/Enable Download Notifications"
+                        android:textColor="#fff"
+                        android:layout_alignParentLeft="true"/>
+                    <Switch
+                        android:id="@+id/switchNotif"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_below="@id/sendButton"
-                    android:gravity="center"
-                    android:text="Enable/Disable download logs"
-                    android:textColor="#fff" />
-
-<!--                <TextView-->
-<!--                    android:id="@+id/changeTelemetryPref"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="35dp"-->
-<!--                    android:layout_below="@id/changeLogPref"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="Enable/Disable Telemetry"-->
-<!--                    android:textColor="#fff" />-->
-
-                <TextView
-                    android:id="@+id/changeImageFormatting"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/textLogs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Disable/Enable Download Logs"
+                        android:textColor="#fff"
+                        android:layout_alignParentLeft="true"/>
+                    <Switch
+                        android:id="@+id/switchLogs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_below="@id/changeNotifPref"
-                    android:gravity="center"
-                    android:text="Press to modify image file formatting"
-                    android:textColor="#fff" />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/textImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Unix Time/RandomText image names"
+                        android:textColor="#fff"
+                        android:layout_alignParentLeft="true"/>
+                    <Switch
+                        android:id="@+id/switchImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/imageFormatNote"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:layout_below="@id/changeImageFormatting"
                     android:gravity="center_horizontal|top"
                     android:text="Images are stored in /Pictures/iFunny. The watermark is automatically removed."
                     android:textColor="#8291B6" />

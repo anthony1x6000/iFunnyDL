@@ -7,14 +7,17 @@ import static com.anth1x.ifunnydl.fonts.fontSubtitle;
 import static com.anth1x.ifunnydl.fonts.fontTitle;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,93 +87,30 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        TextView notifPref = findViewById(R.id.changeNotifPref);
-        SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
-        AtomicBoolean currentDMNotifValue = new AtomicBoolean(sharedPref.getBoolean("DMNotif", true));
-        if (currentDMNotifValue.get()) {
-            notifPref.setText("Press to disable download notifications (kind of recommended)");
-        } else {
-            notifPref.setText("Press to enable download notifications");
-        }
-        notifPref.setOnClickListener(v -> {
-            currentDMNotifValue.set(!currentDMNotifValue.get());
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("DMNotif", currentDMNotifValue.get());
-            editor.apply();
-
-            if (currentDMNotifValue.get()) {
-                notifPref.setText("Press to disable download notifications (kind of recommended)");
-            } else {
-                notifPref.setText("Press to enable download notifications");
-            }
-        });
-
-        TextView prefImgFormattingID = findViewById(R.id.changeImageFormatting);
-        AtomicBoolean prefImgiFunnyFormat = new AtomicBoolean(sharedPref.getBoolean("imgAsiFunnyFormat", true));
-        if (prefImgiFunnyFormat.get()) {
-            prefImgFormattingID.setText("Press to use video file naming format for images (UNIXTIME)");
-        } else {
-            prefImgFormattingID.setText("Press to use iFunny image file naming format for images (random text)");
-        }
-        prefImgFormattingID.setOnClickListener(v -> {
-            prefImgiFunnyFormat.set(!prefImgiFunnyFormat.get());
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("imgAsiFunnyFormat", prefImgiFunnyFormat.get());
-            editor.apply();
-
-            if (prefImgiFunnyFormat.get()) {
-                prefImgFormattingID.setText("Press to use video file naming format for images (UNIXTIME)");
-            } else {
-                prefImgFormattingID.setText("Press to use iFunny image file naming format for images (random text)");
-            }
-        });
-
-        TextView prefLogsID = findViewById(R.id.changeLogPref);
-        AtomicBoolean doLoggingPref = new AtomicBoolean(sharedPref.getBoolean("doLogging", true));
-        if (doLoggingPref.get()) {
-            prefLogsID.setText("Press to disable download logs");
-        } else {
-            prefLogsID.setText("Press to enable download logs");
-        }
-        prefLogsID.setOnClickListener(v -> {
-            doLoggingPref.set(!doLoggingPref.get());
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("doLogging", doLoggingPref.get());
-            editor.apply();
-
-            if (doLoggingPref.get()) {
-                prefLogsID.setText("Press to disable download logs");
-            } else {
-                prefLogsID.setText("Press to enable download logs");
-            }
-        });
-// tel
-//        TextView prefTelID = findViewById(R.id.changeTelemetryPref);
-//        AtomicBoolean doTelPref = new AtomicBoolean(sharedPref.getBoolean("doTelemetry", false));
-//        if (doTelPref.get()) {
-//            prefTelID.setText("Press to disable telemetry");
-//        } else {
-//            prefTelID.setText("Press to enable telemetry");
-//        }
-//        prefTelID.setOnClickListener(v -> {
-//            doTelPref.set(!doTelPref.get());
-//            SharedPreferences.Editor editor = sharedPref.edit();
-//            editor.putBoolean("prefdoTel", doTelPref.get());
-//            editor.apply();
-//            System.out.println("tel = " + doTelPref.get());
-//
-//            if (doTelPref.get()) {
-//                prefTelID.setText("Press to disable telemetry");
-//            } else {
-//                prefTelID.setText("Press to enable telemetry");
-//            }
-//        });
-
         gotoother.setOnClickListener(v -> {
             Intent intent = new Intent(SettingsActivity.this, DisplayHistoryActivity.class);
             startActivity(intent);
         });
 
+//        Start of switches
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        Switch switchNotif = (Switch) findViewById(R.id.switchNotif);
+        boolean savedStateNotif = sharedPref.getBoolean("DMNotif", true);
+        switchNotif.setChecked(savedStateNotif);
+
+        Switch switchLogs = (Switch) findViewById(R.id.switchLogs);
+        boolean savedStateLogs = sharedPref.getBoolean("doLogging", true);
+        switchLogs.setChecked(savedStateLogs);
+
+        Switch switchImage = (Switch) findViewById(R.id.switchImage);
+        boolean savedStateImage = sharedPref.getBoolean("imgAsiFunnyFormat", false);
+        switchImage.setChecked(savedStateImage);
+
+        switchNotif.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SharedPreferences.Editor prefEditor = sharedPref.edit();
+            prefEditor.putBoolean("DMNotif", isChecked);
+            prefEditor.apply();
+        });
 
 //        !!Styling!!
         gotoother.setTypeface(fontBodyText);
@@ -183,16 +123,6 @@ public class SettingsActivity extends AppCompatActivity {
         explain.setTypeface(fontSubtitle);
 
         Objects.requireNonNull(getSupportActionBar()).hide(); // hide header with app title
-
-        TextView[] buttons = {sendButton, notifPref, prefLogsID, prefImgFormattingID};
-        for (int i = 0; i < buttons.length; i++) {
-            buttons[i].setTypeface(fontButton);
-            if (i % 2 == 0) {
-                buttons[i].setBackgroundColor(firstBttnBG);
-            } else {
-                buttons[i].setBackgroundColor(secondBttnBG);
-            }
-        }
 
 //        Status and nav bar stuff
         LinearLayout layout = findViewById(R.id.baseRelLayout);
