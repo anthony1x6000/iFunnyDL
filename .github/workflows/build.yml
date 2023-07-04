@@ -80,7 +80,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            iFunnyDL-${{ env.CURRENT_DATE }}.apk
+            signedrelease/iFunnyDL-${{ env.CURRENT_DATE }}.apk
           body: " \n\nDownload ``iFunnyDL-${{ env.CURRENT_DATE }}.apk`` and install it on your Android device. Share an iFunny post to the app or paste a link into the URL box and it'll download it to Pictures/iFunnyDL."
           append_body: true
           draft: false
