@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     history.addURL(initShare);
 
                     startDLService(initShare);
-                    finishAndRemoveTask();
+                    // finishAndRemoveTask();
                 }
             });
         }
