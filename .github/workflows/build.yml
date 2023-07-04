@@ -31,7 +31,10 @@ jobs:
       - name: Allow execute Gradlew
         run: chmod +x gradlew
 
-      - name: Sign app APK
+      - name: Build APK
+        run: ./gradlew assembleRelease
+
+      - name: Sign APK
         uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
@@ -41,7 +44,7 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Upload Signed APK as artifact
+      - name: Artifact signed APK
         uses: actions/upload-artifact@v3
         with:
           name: iFunnyDLsigned
