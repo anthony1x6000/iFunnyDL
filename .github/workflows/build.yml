@@ -69,7 +69,7 @@ jobs:
       - name: Artifact signed APK
         uses: actions/upload-artifact@v3
         with:
-          name: iFunnyDLsigned
+          name: iFunnyDL
           path: |
             signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
             signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.sha256
