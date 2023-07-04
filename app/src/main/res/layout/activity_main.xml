@@ -48,8 +48,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/titlescool"
                 android:gravity="center_horizontal|top"
-                android:text="Share iFunny post link to this app to quickly download video."
-                android:textColor="#39445F"
+                android:text="Share iFunny post link to this app to quickly download a post!"
+                android:textColor="#a1b2d9"
                 android:textSize="15sp" />
 
             <LinearLayout
@@ -64,7 +64,6 @@
                     android:id="@+id/inputURL"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:background="@drawable/input"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:textColor="#9DC1EE"/>
