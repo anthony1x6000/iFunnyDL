@@ -35,7 +35,7 @@ jobs:
         run: |
           ls ${ANDROID_HOME}/build-tools/30.0.3/
           echo "export PATH=\$PATH:${ANDROID_HOME}/build-tools/30.0.3/" >> $GITHUB_ENV
-          apksigner --version
+          ${ANDROID_HOME}/build-tools/30.0.3/apksigner --version
 
       - name: Allow execute Gradlew
         run: chmod +x gradlew
