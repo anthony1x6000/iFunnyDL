@@ -44,11 +44,21 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
+      - name: Move and Hash
+        run: |
+          mkdir -p /signedrelease/
+          mv ${{steps.sign_app.outputs.signedReleaseFile}} /signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
+          cd /signedrelease/
+          sha256sum /signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
+          sha256sum /signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk > /signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.sha256
+
       - name: Artifact signed APK
         uses: actions/upload-artifact@v3
         with:
           name: iFunnyDLsigned
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          path: |
+            /signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
+            /signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.sha256
 
       - name: Release APK
         uses: softprops/action-gh-release@v1
