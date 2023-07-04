@@ -31,15 +31,17 @@ jobs:
         run: |
           echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "build-tools;30.0.3"
 
+      - name: Add apksigner to PATH & Test
+        run: |
+          echo "export PATH=\$PATH:${ANDROID_HOME}/build-tools/30.0.3/" >> $GITHUB_ENV
+          apksigner --version
+
       - name: Allow execute Gradlew
         run: chmod +x gradlew
 
-      - name: Build APK
+      - name: Build + Move APK
         run: |
           ./gradlew assembleRelease
-
-      - name: Move APK
-        run: |
           ls app/build/outputs/apk/release
           mkdir -p signedrelease/
           mv app/build/outputs/apk/release/app-release-unsigned.apk  signedrelease/app-release-unsigned.apk
