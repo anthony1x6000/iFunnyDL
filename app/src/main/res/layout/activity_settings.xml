@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ougi" />
+        app:srcCompat="@drawable/bg_settings" />
 
     <LinearLayout
         android:id="@+id/baseRelLayout"
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|top"
                 android:text="iFunny.DL"
-                android:textColor="#83A5D1"
+                android:textColor="#9890e9"
                 android:textSize="54sp" />
 
             <TextView
@@ -48,7 +48,7 @@
                 android:layout_below="@id/titlescool"
                 android:gravity="center_horizontal|top"
                 android:text="Settings"
-                android:textColor="#9DC1EE"
+                android:textColor="#9890e9"
                 android:textSize="15sp" />
         </RelativeLayout>
 
@@ -68,7 +68,7 @@
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:text="Change file ending (-{iFunny}.mp4)"
-                    android:textColor="#9DC1EE"/>
+                    android:textColor="#9890e9"/>
 
                 <TextView
                     android:id="@+id/sendButton"
