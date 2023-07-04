@@ -51,14 +51,9 @@ jobs:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
 
-      - name: Sign APK
+      - name: Verify APK
         run: |
-          echo ${{ secrets.SIGNING_KEY }} | base64 --decode > signing_key.jks
-          cd signedrelease
-          ls
-          ${ANDROID_HOME}/build-tools/30.0.3/apksigner sign --ks signing_key.jks --ks-pass ${{ secrets.KEYSTORE_PASSWORD }} --key-pass ${{ secrets.KEY_PASSWORD }} app-release-unsigned.apk
-          cd
-          mv signedrelease/app-release.apk signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
+          ${ANDROID_HOME}/build-tools/30.0.3/apksigner verify --print-certs app/build/outputs/apk/release/iFunnyGHRelease.apk
 
       - name: Hash
         run: |
