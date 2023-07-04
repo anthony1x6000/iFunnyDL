@@ -34,7 +34,7 @@ android {
         releaseGH {
             applicationVariants.all { variant ->
                 variant.outputs.all {
-                    outputFileName = "${rootProject.name}_${versionName}.apk"
+                    outputFileName = "iFunnyGHRelease.apk"
                 }
             }
             signingConfig signingConfigs.releaseGH
