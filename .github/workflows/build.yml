@@ -15,12 +15,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Get current date
+      - name: Current date
         id: current-date
-        run: echo "CURRENT_DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
-
-      - name: Print date
-        run: echo $CURRENT_DATE
+        run: |
+          echo "CURRENT_DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
+          echo $CURRENT_DATE
 
       - name: Set up JDK
         uses: actions/setup-java@v3
@@ -46,19 +45,18 @@ jobs:
 
       - name: Move and Hash
         run: |
-          mkdir -p /signedrelease/
-          mv ${{steps.sign_app.outputs.signedReleaseFile}} /signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
-          cd /signedrelease/
-          sha256sum /signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
-          sha256sum /signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk > /signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.sha256
+          mkdir -p signedrelease/
+          mv ${{steps.sign_app.outputs.signedReleaseFile}} signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
+          sha256sum signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
+          sha256sum signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk > signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.sha256
 
       - name: Artifact signed APK
         uses: actions/upload-artifact@v3
         with:
           name: iFunnyDLsigned
           path: |
-            /signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
-            /signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.sha256
+            signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
+            signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.sha256
 
       - name: Release APK
         uses: softprops/action-gh-release@v1
