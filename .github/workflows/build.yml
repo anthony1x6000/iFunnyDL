@@ -33,6 +33,7 @@ jobs:
 
       - name: Add apksigner to PATH & Test
         run: |
+          ls ${ANDROID_HOME}/build-tools/30.0.3/
           echo "export PATH=\$PATH:${ANDROID_HOME}/build-tools/30.0.3/" >> $GITHUB_ENV
           apksigner --version
 
