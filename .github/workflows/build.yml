@@ -50,7 +50,7 @@ jobs:
       - name: Sign APK
         run: |
           echo ${{ secrets.SIGNING_KEY }} | base64 --decode > signing_key.jks
-          ${ANDROID_HOME}/build-tools/30.0.3/apksigner sign --ks signing_key.jks --ks-pass ${{ secrets.KEYSTORE_PASSWORD }} --key-pass ${{ secrets.KEY_PASSWORD }} signedrelease/app-release-unsigned.apk --out signedrelease/app-release-signed.apk
+          ${ANDROID_HOME}/build-tools/30.0.3/apksigner sign --ks signing_key.jks --ks-pass ${{ secrets.KEYSTORE_PASSWORD }} --key-pass ${{ secrets.KEY_PASSWORD }} --out signedrelease/app-release-signed.apk signedrelease/app-release-unsigned.apk 
           mv signedrelease/app-release-unsigned.apk signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
 
       - name: Hash
