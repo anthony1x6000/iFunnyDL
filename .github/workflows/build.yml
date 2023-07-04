@@ -49,15 +49,16 @@ jobs:
           ./gradlew assembleReleaseGH
           ls app/build/outputs/apk/release
           mkdir -p signedrelease/
-          mv app/build/outputs/apk/release/iFunnyGHRelease.apk  signedrelease/app-release-unsigned.apk
+          mv app/build/outputs/apk/release/iFunnyGHRelease.apk  signedrelease/iFunnyGHRelease.apk
         env:
           ALIAS: ${{ secrets.ALIAS }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
 
-      - name: Verify APK
+      - name: Verify APK + Rename
         run: |
-          ${ANDROID_HOME}/build-tools/30.0.3/apksigner verify --print-certs app/build/outputs/apk/release/iFunnyGHRelease.apk
+          ${ANDROID_HOME}/build-tools/30.0.3/apksigner verify --print-certs signedrelease/iFunnyGHRelease.apk
+          mv signedrelease/iFunnyGHRelease.apk signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
 
       - name: Hash
         run: |
