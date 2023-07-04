@@ -9,7 +9,6 @@ public class fonts {
     public static Typeface fontBodyText;
     public static Typeface fontTitle;
     public static Typeface fontInput;
-
     public static void init(Context context) {
         fontButton = Typeface.createFromAsset(context.getAssets(), "fonts/Porter.ttf");
         fontSubtitle = Typeface.createFromAsset(context.getAssets(), "fonts/Montserrat-Light.ttf");

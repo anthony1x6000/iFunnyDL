@@ -1,6 +1,8 @@
 package com.anth1x.ifunnydl;
 
+import static com.anth1x.ifunnydl.fonts.fontAltText;
 import static com.anth1x.ifunnydl.fonts.fontBodyText;
+import static com.anth1x.ifunnydl.fonts.fontButton;
 import static com.anth1x.ifunnydl.fonts.fontInput;
 import static com.anth1x.ifunnydl.fonts.fontSubtitle;
 import static com.anth1x.ifunnydl.fonts.fontTitle;
@@ -9,8 +11,12 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -105,6 +111,10 @@ public class SettingsActivity extends AppCompatActivity {
         switchImage.setOnCheckedChangeListener(new SwitchStateChangeListener("imgAsiFunnyFormat"));
 
 //        !!Styling!!
+        LinearLayout centerButtons = findViewById(R.id.centerButtons);
+        setFont(centerButtons, fontInput);
+
+        sendButton.setTypeface(fontButton);
         gotoother.setTypeface(fontBodyText);
         footer.setTypeface(fontBodyText);
         TextView imageFormatNote = findViewById(R.id.imageFormatNote);
@@ -123,6 +133,16 @@ public class SettingsActivity extends AppCompatActivity {
         int navigationBarHeight = getNavigationBarHeight();
         layout.setPadding(0, statusBarHeight, 0, 0);
         mainFooter.setPadding(0, 0, 0, navigationBarHeight);
+    }
+    private void setFont(ViewGroup viewGroup, Typeface typeface) {
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            View child = viewGroup.getChildAt(i);
+            if (child instanceof TextView) {
+                ((TextView) child).setTypeface(typeface);
+            } else if (child instanceof ViewGroup) {
+                setFont((ViewGroup) child, typeface);
+            }
+        }
     }
     private class SwitchStateChangeListener implements CompoundButton.OnCheckedChangeListener {
         private String key;
