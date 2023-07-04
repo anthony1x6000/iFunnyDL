@@ -21,6 +21,11 @@ Best experience with Android 10+
 
 ## Usage
 Download the APK, install it, and share an iFunny post to the app to download. 
+
+## App crashing
+The app may crash due to background battery restrictions such as having Battery Saver enabled. Bypass this by giving this app <a href="#batusage">Unrestricted App battery usage</a>.
+
+
 ## Video tutorials
 <table>
   <tr>
