@@ -81,7 +81,7 @@ jobs:
         with:
           files: |
             iFunnyDL-${{ env.CURRENT_DATE }}.apk
-          body: " \n\nDownload ``iFunnyDL-${{ env.CURRENT_DATE }}.apk`` and install it on your android device. Share an iFunny post to the app or paste a link into the URL box and it'll download it to Pictures/iFunnyDL."
+          body: " \n\nDownload ``iFunnyDL-${{ env.CURRENT_DATE }}.apk`` and install it on your Android device. Share an iFunny post to the app or paste a link into the URL box and it'll download it to Pictures/iFunnyDL."
           append_body: true
           draft: false
           prerelease: false
