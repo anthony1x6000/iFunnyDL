@@ -27,26 +27,26 @@ jobs:
           distribution: 'adopt'
           java-version: '17'
 
+      - name: Install Android SDK build tools
+        run: |
+          echo "y" | sudo /usr/local/android-sdk/tools/bin/sdkmanager --install "build-tools;30.0.3"
+
       - name: Allow execute Gradlew
         run: chmod +x gradlew
 
       - name: Build APK
-        run: ./gradlew assembleRelease
+        run: |
+          ./gradlew assembleRelease
+          mkdir -p signedrelease/
+          mv app/build/outputs/apk/release/app-release.apk signedrelease/app-release.apk
 
       - name: Sign APK
-        uses: r0adkll/sign-android-release@v1
-        id: sign_app
-        with:
-          releaseDirectory: app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
-
-      - name: Move and Hash
         run: |
-          mkdir -p signedrelease/
-          mv ${{steps.sign_app.outputs.signedReleaseFile}} signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
+          echo ${{ secrets.SIGNING_KEY }} | base64 --decode > signing_key.jks
+          apksigner sign --ks signing_key.jks --ks-pass ${{ secrets.KEYSTORE_PASSWORD }} --key-pass ${{ secrets.KEY_PASSWORD }} signedrelease/app-release.apk
+
+      - name: Hash
+        run: |
           sha256sum signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
           sha256sum signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk > signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.sha256
 
