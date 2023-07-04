@@ -48,9 +48,8 @@ jobs:
       - name: Build + Move APK
         run: |
           ./gradlew assembleReleaseGH
-          ls app/build/outputs/apk/release
           mkdir -p signedrelease/
-          mv app/build/outputs/apk/release/iFunnyGHRelease.apk  signedrelease/iFunnyGHRelease.apk
+          mv app/build/outputs/apk/releaseGH/iFunnyGHRelease.apk  signedrelease/iFunnyGHRelease.apk
         env:
           ALIAS: ${{ secrets.ALIAS }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
