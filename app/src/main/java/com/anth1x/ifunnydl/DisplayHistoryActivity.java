@@ -10,9 +10,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.util.Linkify;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -89,11 +93,32 @@ public class DisplayHistoryActivity extends AppCompatActivity {
 
         //        Status and nav bar stuff
         LinearLayout layout = findViewById(R.id.baseRelLayout);
-        RelativeLayout mainFooter = findViewById(R.id.mainFooter);
+        final RelativeLayout mainFooter = findViewById(R.id.mainFooter);
         int statusBarHeight = getStatusBarHeight();
         int navigationBarHeight = getNavigationBarHeight();
         layout.setPadding(0, statusBarHeight, 0, 0);
         mainFooter.setPadding(0, 0, 0, navigationBarHeight);
+
+        final DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        final int screenHeight = displayMetrics.heightPixels;
+
+        final ScrollView scrollView = findViewById(R.id.scrollView);
+
+        mainFooter.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mainFooter.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                int mainFooterHeight = mainFooter.getHeight() * 2;
+                int viewHeight = screenHeight - mainFooterHeight;
+                System.out.println("foothe = " + mainFooterHeight);
+
+                ViewGroup.LayoutParams layoutParams = scrollView.getLayoutParams();
+                layoutParams.height = viewHeight;
+                scrollView.setLayoutParams(layoutParams);
+            }
+        });
     }
 
     @SuppressLint({"SetTextI18n", "RtlHardcoded"})
