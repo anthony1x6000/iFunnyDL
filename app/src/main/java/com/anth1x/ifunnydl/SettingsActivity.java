@@ -1,6 +1,5 @@
 package com.anth1x.ifunnydl;
 
-import static com.anth1x.ifunnydl.fonts.fontAltText;
 import static com.anth1x.ifunnydl.fonts.fontBodyText;
 import static com.anth1x.ifunnydl.fonts.fontButton;
 import static com.anth1x.ifunnydl.fonts.fontInput;
