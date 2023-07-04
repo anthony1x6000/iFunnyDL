@@ -21,12 +21,6 @@ jobs:
           echo "CURRENT_DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
           echo $CURRENT_DATE
 
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'adopt'
-          java-version: '17'
-
       - name: Install Android SDK build tools
         run: |
           echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "build-tools;30.0.3"
@@ -35,7 +29,13 @@ jobs:
         run: |
           ls ${ANDROID_HOME}/build-tools/30.0.3/
           echo "export PATH=\$PATH:${ANDROID_HOME}/build-tools/30.0.3/" >> $GITHUB_ENV
-          ./${ANDROID_HOME}/build-tools/30.0.3/apksigner --version
+          ${ANDROID_HOME}/build-tools/30.0.3/apksigner --version
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '17'
 
       - name: Allow execute Gradlew
         run: chmod +x gradlew
@@ -50,7 +50,7 @@ jobs:
       - name: Sign APK
         run: |
           echo ${{ secrets.SIGNING_KEY }} | base64 --decode > signing_key.jks
-          apksigner sign --ks signing_key.jks --ks-pass ${{ secrets.KEYSTORE_PASSWORD }} --key-pass ${{ secrets.KEY_PASSWORD }} signedrelease/app-release-unsigned.apk
+          ${ANDROID_HOME}/build-tools/30.0.3/apksigner sign --ks signing_key.jks --ks-pass ${{ secrets.KEYSTORE_PASSWORD }} --key-pass ${{ secrets.KEY_PASSWORD }} signedrelease/app-release-unsigned.apk
           mv signedrelease/app-release-unsigned.apk signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
 
       - name: Hash
