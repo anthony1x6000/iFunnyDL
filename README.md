@@ -16,7 +16,6 @@ If you want the latest unreleased builds, download the latest build by going to 
 Or, you can use [nightly.link](https://nightly.link/anthony1x6000/iFunnyDL/workflows/build/main/iFunnyDL.zip) to download the latest build.
 
 ## Compatibility
-Verified compatibility with Android 6, 10, 13. \
 Best experience with Android 10+
 
 ## Usage
