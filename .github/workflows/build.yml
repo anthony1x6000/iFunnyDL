@@ -40,7 +40,7 @@ jobs:
       - name: Allow execute Gradlew
         run: chmod +x gradlew
 
-      - name: Make signing thing
+      - name: Decode SIGNING_KEY
         run: |
           echo ${{ secrets.SIGNING_KEY }} | base64 --decode > signing_key.jks
 
