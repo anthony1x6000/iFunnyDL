@@ -31,9 +31,6 @@ jobs:
       - name: Allow execute Gradlew
         run: chmod +x gradlew
 
-#      - name: Build with Gradle
-#        run: ./gradlew :app:assembleDebug
-
       - name: Sign app APK
         uses: r0adkll/sign-android-release@v1
         id: sign_app
@@ -44,16 +41,11 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Move + Rename APK
-        run: |
-#          mv app/build/outputs/apk/debug/app-debug.apk iFunnyDL-$CURRENT_DATE.apk
-          mv app/build/outputs/apk/release iFunnyDL-$CURRENT_DATE.apk
-
-      - name: Upload artifact
+      - name: Upload Signed APK as artifact
         uses: actions/upload-artifact@v3
         with:
-          name: iFunnyDL
-          path: iFunnyDL-${{ env.CURRENT_DATE }}.apk
+          name: iFunnyDLsigned
+          path: ${{steps.sign_app.outputs.signedReleaseFile}}
 
       - name: Release APK
         uses: softprops/action-gh-release@v1
