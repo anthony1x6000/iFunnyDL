@@ -68,7 +68,7 @@
                 android:textColor="#fff" />
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="5dp"
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/scrollView"
                 app:layout_constraintBottom_toBottomOf="parent">
