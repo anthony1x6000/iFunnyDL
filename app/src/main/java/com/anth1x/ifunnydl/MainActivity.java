@@ -5,21 +5,22 @@ import static com.anth1x.ifunnydl.fonts.fontButton;
 import static com.anth1x.ifunnydl.fonts.fontInput;
 import static com.anth1x.ifunnydl.fonts.fontSubtitle;
 import static com.anth1x.ifunnydl.fonts.fontTitle;
-import static com.anth1x.ifunnydl.globalDefaults.teledestString;
-import static com.anth1x.ifunnydl.globalDefaults.tmpDestString;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -61,6 +62,56 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
         }
     }
+
+    public boolean checkPowerSaving() {
+        PowerManager powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
+        boolean powerSaveMode = powerManager.isPowerSaveMode();
+
+        if (powerSaveMode) {
+            System.out.println("In power savings. Complaining");
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("App doesn't work with Battery Saver enabled. Please disable or set app Battery Optimization to Unrestricted. Please see the GitHub repo for more details.")
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+        return powerSaveMode;
+    }
+
+    public void startIntent(TextView sendButton, EditText inputURL, urlHistory history, Intent intent, String action, String type) {
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            System.out.println("Shared a link");
+            if ("text/plain".equals(type)) {
+                String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+                if (sharedText != null) {
+                    System.out.println("shared text = " + sharedText);
+                    history.addURL(sharedText);
+
+                    startDLService(sharedText);
+                    finishAndRemoveTask();
+                }
+            }
+        } else {
+            System.out.println("Doing buttons");
+            sendButton.setOnClickListener(view -> {
+                initShare = inputURL.getText().toString();
+                if (!initShare.isEmpty() && initShare.contains("ifunny.co")) {
+                    System.out.println("Send initshare = " + initShare);
+                    history.addURL(initShare);
+
+                    startDLService(initShare);
+                    finishAndRemoveTask();
+                }
+            });
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("Created!!!!");
@@ -69,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         fonts.init(this);
         urlHistory history = new urlHistory(this);
 
-        // Give permissions
+//        Give Permissions
         String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
         List<String> permissionsToRequest = new ArrayList<>();
         for (String permission : permissions) {
@@ -102,8 +153,10 @@ public class MainActivity extends AppCompatActivity {
         gotosettings.setTypeface(fontBodyText);
         explain.setTypeface(fontSubtitle);
         inputURL.setTypeface(fontInput);
-        int sendButtBackgroundColor = Color.argb((int) (0.45 * 255), 86, 102, 162);
-        sendButton.setBackgroundColor(sendButtBackgroundColor);
+        int sendBG = Color.argb((int) (0.45 * 255), 45, 50, 80);
+        int inputBG = Color.argb((int) (0.30 * 255), 45, 50, 80);
+        sendButton.setBackgroundColor(sendBG);
+        inputURL.setBackgroundColor(inputBG);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         String currentText = footer.getText().toString();
@@ -117,36 +170,15 @@ public class MainActivity extends AppCompatActivity {
         int statusBarHeight = getStatusBarHeight();
         int navigationBarHeight = getNavigationBarHeight();
         layout.setPadding(0, statusBarHeight, 0, navigationBarHeight);
-
-//      Opened intent
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
-        if (Intent.ACTION_SEND.equals(action) && type != null) {
-            System.out.println("started for share");
-            if ("text/plain".equals(type)) {
-                String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-                if (sharedText != null) {
-                    System.out.println("shared text = " + sharedText);
-                    history.addURL(sharedText);
-
-                    startDLService(sharedText);
-                    finishAndRemoveTask();
-                }
+        if (checkPowerSaving() == false) {
+            Intent intent = getIntent();
+            String action = intent.getAction();
+            String type = intent.getType();
+            if (Intent.ACTION_SEND.equals(action) && type != null) {
+                System.out.println("it is!");
+                finishAffinity();
             }
-        } else {
-            System.out.println("Doing buttons");
-
-            sendButton.setOnClickListener(view -> {
-                initShare = inputURL.getText().toString();
-                if (!initShare.isEmpty() && initShare.contains("ifunny.co")) {
-                    System.out.println("Send initshare = " + initShare);
-                    history.addURL(initShare);
-
-                    startDLService(initShare);
-                    finishAndRemoveTask();
-                }
-            });
+            startIntent(sendButton, inputURL, history, intent, action, type);
         }
     }
 
