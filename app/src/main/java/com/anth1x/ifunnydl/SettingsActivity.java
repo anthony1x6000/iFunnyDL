@@ -1,13 +1,11 @@
 package com.anth1x.ifunnydl;
 
 import static com.anth1x.ifunnydl.fonts.fontBodyText;
-import static com.anth1x.ifunnydl.fonts.fontButton;
 import static com.anth1x.ifunnydl.fonts.fontInput;
 import static com.anth1x.ifunnydl.fonts.fontSubtitle;
 import static com.anth1x.ifunnydl.fonts.fontTitle;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -23,9 +21,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SettingsActivity extends AppCompatActivity {
+    private SharedPreferences sharedPref;
     private int getStatusBarHeight() {
         int result = 0;
         @SuppressLint({"InternalInsetResource", "DiscouragedApi"}) int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -55,6 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         fonts.init(this);
+        sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
 
 //      Elements
         TextView sendButton = findViewById(R.id.sendButton);
@@ -72,7 +71,6 @@ public class SettingsActivity extends AppCompatActivity {
         sendButton.setOnClickListener(v -> {
             String fileName = inputFileName.getText().toString();
             if (isValidFileName(fileName)) {
-                SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 System.out.println("Customized file name = " + fileName);
                 editor.putString("fileName", fileName);
@@ -93,24 +91,18 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 //        Start of switches
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        Switch switchNotif = (Switch) findViewById(R.id.switchNotif);
-        boolean savedStateNotif = sharedPref.getBoolean("DMNotif", true);
-        switchNotif.setChecked(savedStateNotif);
+//        sharedPrefPrivate = getPreferences(Context.MODE_PRIVATE);
+        Switch switchNotif = findViewById(R.id.switchNotif);
+        Switch switchLogs = findViewById(R.id.switchLogs);
+        Switch switchImage = findViewById(R.id.switchImage);
 
-        Switch switchLogs = (Switch) findViewById(R.id.switchLogs);
-        boolean savedStateLogs = sharedPref.getBoolean("doLogging", true);
-        switchLogs.setChecked(savedStateLogs);
+        switchNotif.setChecked(sharedPref.getBoolean("DMNotif", true));
+        switchLogs.setChecked(sharedPref.getBoolean("doLogging", true));
+        switchImage.setChecked(sharedPref.getBoolean("imgAsiFunnyFormat", false));
 
-        Switch switchImage = (Switch) findViewById(R.id.switchImage);
-        boolean savedStateImage = sharedPref.getBoolean("imgAsiFunnyFormat", false);
-        switchImage.setChecked(savedStateImage);
-
-        switchNotif.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            SharedPreferences.Editor prefEditor = sharedPref.edit();
-            prefEditor.putBoolean("DMNotif", isChecked);
-            prefEditor.apply();
-        });
+        switchNotif.setOnCheckedChangeListener(new SwitchStateChangeListener("DMNotif"));
+        switchLogs.setOnCheckedChangeListener(new SwitchStateChangeListener("doLogging"));
+        switchImage.setOnCheckedChangeListener(new SwitchStateChangeListener("imgAsiFunnyFormat"));
 
 //        !!Styling!!
         gotoother.setTypeface(fontBodyText);
@@ -131,5 +123,17 @@ public class SettingsActivity extends AppCompatActivity {
         int navigationBarHeight = getNavigationBarHeight();
         layout.setPadding(0, statusBarHeight, 0, 0);
         mainFooter.setPadding(0, 0, 0, navigationBarHeight);
+    }
+    private class SwitchStateChangeListener implements CompoundButton.OnCheckedChangeListener {
+        private String key;
+        public SwitchStateChangeListener(String key) {
+            this.key = key;
+        }
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            SharedPreferences.Editor prefEditor = sharedPref.edit();
+            prefEditor.putBoolean(key, isChecked);
+            prefEditor.apply();
+        }
     }
 }
