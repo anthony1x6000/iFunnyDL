@@ -37,6 +37,9 @@ jobs:
       - name: Build APK
         run: |
           ./gradlew assembleRelease
+
+      - name: Move APK
+        run: |
           mkdir -p signedrelease/
           mv app/build/outputs/apk/release/app-release.apk signedrelease/app-release.apk
 
