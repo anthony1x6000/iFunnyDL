@@ -68,7 +68,6 @@ public class SettingsActivity extends AppCompatActivity {
         TextView footer = findViewById(R.id.footer);
 
         int firstBttnBG = Color.argb((int) (0.63 * 255), 17, 33, 59);
-        int secondBttnBG = Color.argb((int) (0.45 * 255), 17, 33, 59);
         int inputBG = Color.argb((int) (0.45 * 255), 17, 33, 63);
         inputFileName.setBackgroundColor(inputBG);
 
@@ -95,7 +94,6 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 //        Start of switches
-//        sharedPrefPrivate = getPreferences(Context.MODE_PRIVATE);
         Switch switchNotif = findViewById(R.id.switchNotif);
         Switch switchLogs = findViewById(R.id.switchLogs);
         Switch switchImage = findViewById(R.id.switchImage);
