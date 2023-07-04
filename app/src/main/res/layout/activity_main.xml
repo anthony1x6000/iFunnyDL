@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|top"
                 android:text="iFunnyDL"
-                android:textColor="#0A142C"
+                android:textColor="#141724"
                 android:textSize="54sp" />
 
             <TextView
