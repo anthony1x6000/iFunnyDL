@@ -50,10 +50,10 @@ jobs:
       - name: Sign APK
         run: |
           echo ${{ secrets.SIGNING_KEY }} | base64 --decode > signing_key.jks
-          ls signedrelease
           cd signedrelease
           ls
-          ${ANDROID_HOME}/build-tools/30.0.3/apksigner sign --ks signing_key.jks --ks-pass ${{ secrets.KEYSTORE_PASSWORD }} --key-pass ${{ secrets.KEY_PASSWORD }} app-release-unsigned.apk
+          ${ANDROID_HOME}/build-tools/30.0.3/zipalign -v -p 4 app-release-unsigned.apk app-release-unsigned-align.apk
+          ${ANDROID_HOME}/build-tools/30.0.3/apksigner sign --ks signing_key.jks --ks-pass ${{ secrets.KEYSTORE_PASSWORD }} --key-pass ${{ secrets.KEY_PASSWORD }} app-release-unsigned-align.apk
           cd
           mv signedrelease/app-release-unsigned.apk signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
 
