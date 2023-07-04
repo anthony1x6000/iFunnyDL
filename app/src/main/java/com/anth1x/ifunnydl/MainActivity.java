@@ -73,11 +73,7 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("App doesn't work with Battery Saver enabled. Please disable or set app Battery Optimization to Unrestricted. Please see the GitHub repo for more details.")
                     .setCancelable(false)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
+                    .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
             AlertDialog alert = builder.create();
             alert.show();
         }
