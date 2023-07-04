@@ -42,20 +42,23 @@ jobs:
 
       - name: Build + Move APK
         run: |
-          ./gradlew assembleRelease
+          ./gradlew assembleReleaseGH
           ls app/build/outputs/apk/release
           mkdir -p signedrelease/
           mv app/build/outputs/apk/release/app-release-unsigned.apk  signedrelease/app-release-unsigned.apk
+        env:
+          ALIAS: ${{ secrets.ALIAS }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
 
       - name: Sign APK
         run: |
           echo ${{ secrets.SIGNING_KEY }} | base64 --decode > signing_key.jks
           cd signedrelease
           ls
-          ${ANDROID_HOME}/build-tools/30.0.3/zipalign -v -p 4 app-release-unsigned.apk app-release-unsigned-align.apk
-          ${ANDROID_HOME}/build-tools/30.0.3/apksigner sign --ks signing_key.jks --ks-pass ${{ secrets.KEYSTORE_PASSWORD }} --key-pass ${{ secrets.KEY_PASSWORD }} app-release-unsigned-align.apk
+          ${ANDROID_HOME}/build-tools/30.0.3/apksigner sign --ks signing_key.jks --ks-pass ${{ secrets.KEYSTORE_PASSWORD }} --key-pass ${{ secrets.KEY_PASSWORD }} app-release-unsigned.apk
           cd
-          mv signedrelease/app-release-unsigned.apk signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
+          mv signedrelease/app-release.apk signedrelease/iFunnyDL-${{env.CURRENT_DATE}}.apk
 
       - name: Hash
         run: |
