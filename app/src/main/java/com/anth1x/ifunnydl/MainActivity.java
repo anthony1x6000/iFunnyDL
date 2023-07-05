@@ -9,10 +9,12 @@ import static com.anth1x.ifunnydl.fonts.fontTitle;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.widget.EditText;
@@ -66,15 +68,24 @@ public class MainActivity extends AppCompatActivity {
         PowerManager powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
         boolean powerSaveMode = powerManager.isPowerSaveMode();
 
-        if (powerSaveMode) {
-            System.out.println("In power savings. Complaining");
+        boolean notBatOptimized = powerManager.isIgnoringBatteryOptimizations(getPackageName());
+        boolean isUnrestricted = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            isUnrestricted = !activityManager.isBackgroundRestricted();
+        }
+        System.out.println("notBatOptimized = " + notBatOptimized + " isUnrestricted = " + isUnrestricted);
+        if (!notBatOptimized || !isUnrestricted) {
+            if (powerSaveMode) {
+                System.out.println("In power savings. Complaining");
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("App doesn't work with Battery Saver enabled. Please disable or set app Battery Optimization to Unrestricted. Please see the GitHub repo for more details.")
-                    .setCancelable(false)
-                    .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
-            AlertDialog alert = builder.create();
-            alert.show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("App doesn't work with Battery Saver enabled. Please disable or set app Battery Optimization to Unrestricted. Please see the GitHub repo for more details.")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
         }
         return powerSaveMode;
     }
