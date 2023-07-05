@@ -6,7 +6,7 @@ Just share a post through the iFunny app to this app and then it'll download the
 - Supports Image, GIF, and **Video** downloads.  
 - Custom naming schemes (kinda)
 - Download Logs
-- Very nice design (the best) \
+
 You can see some of these features in the [videos below](https://github.com/anthony1x6000/iFunnyDL#video-tutorials). 
 
 ## Downloads
