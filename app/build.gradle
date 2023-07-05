@@ -7,8 +7,8 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.anth1x.ifunnydl"
-        minSdk 23
+        applicationId 'dev.pages.anthonyonline.ifunnyDL'
+        minSdk 29
         targetSdk 33
         versionCode 1
         versionName "1.0"
