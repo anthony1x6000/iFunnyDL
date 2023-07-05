@@ -7,8 +7,6 @@ on:
   release:
     types: [created]
   workflow_dispatch:
-  paths-ignore:
-    - 'README.md'
 
 jobs:
   build:
