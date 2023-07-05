@@ -111,7 +111,6 @@ public class DisplayHistoryActivity extends AppCompatActivity {
                 rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 RelativeLayout header = findViewById(R.id.header);
                 LinearLayout centerButtons = findViewById(R.id.centerButtons);
-                centerButtons.setBackgroundColor(Color.parseColor("#FF0000"));
 
                 DisplayMetrics displayMetrics = new DisplayMetrics();
                 getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
