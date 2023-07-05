@@ -121,7 +121,7 @@
                         android:id="@+id/textImage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Unix Time/RandomText image names"
+                        android:text="Random Text/Unix Time image names"
                         android:textColor="#fff"
                         android:layout_alignParentLeft="true"/>
                     <Switch
