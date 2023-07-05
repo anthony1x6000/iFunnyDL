@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.util.Linkify;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
@@ -93,30 +94,39 @@ public class DisplayHistoryActivity extends AppCompatActivity {
 
         //        Status and nav bar stuff
         LinearLayout layout = findViewById(R.id.baseRelLayout);
-        final RelativeLayout mainFooter = findViewById(R.id.mainFooter);
+        LinearLayout mainFooter = findViewById(R.id.mainFooter);
         int statusBarHeight = getStatusBarHeight();
         int navigationBarHeight = getNavigationBarHeight();
         layout.setPadding(0, statusBarHeight, 0, 0);
         mainFooter.setPadding(0, 0, 0, navigationBarHeight);
 
-        final DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        final int screenHeight = displayMetrics.heightPixels;
+        updateHeight();
+    }
 
-        final ScrollView scrollView = findViewById(R.id.scrollView);
-
-        mainFooter.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+    public void updateHeight() {
+        final View rootView = findViewById(android.R.id.content);
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mainFooter.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                RelativeLayout header = findViewById(R.id.header);
+                LinearLayout centerButtons = findViewById(R.id.centerButtons);
+                centerButtons.setBackgroundColor(Color.parseColor("#FF0000"));
 
-                int mainFooterHeight = mainFooter.getHeight() * 2;
-                int viewHeight = screenHeight - mainFooterHeight;
-                System.out.println("foothe = " + mainFooterHeight);
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-                ViewGroup.LayoutParams layoutParams = scrollView.getLayoutParams();
-                layoutParams.height = viewHeight;
-                scrollView.setLayoutParams(layoutParams);
+                int screenHeight = displayMetrics.heightPixels;
+
+                LinearLayout mainFooter = findViewById(R.id.mainFooter);
+                int mainFooterHeight = mainFooter.getHeight();
+                int headerHeight = header.getHeight();
+                int marginTop = (int) getResources().getDimension(R.dimen.centerButtons_marginTop);
+                int availableHeight = Math.abs(screenHeight - mainFooterHeight - headerHeight - marginTop);
+                System.out.println("mfoot = " + mainFooterHeight + "headerhe = " + headerHeight  + "marg top = " + marginTop + "screenhei = " + screenHeight);
+                System.out.println("available height = " + availableHeight);
+                centerButtons.getLayoutParams().height = availableHeight;
+                centerButtons.requestLayout();
             }
         });
     }

@@ -134,10 +134,11 @@
         </LinearLayout>
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/mainFooter">
+        android:layout_height="wrap_content"
+        android:id="@+id/mainFooter"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/gotocute"
@@ -153,12 +154,12 @@
         <TextView
             android:id="@+id/footer"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:gravity="right|bottom"
             android:text="github.com/anthony1x6000/iFunnyDL\nanthonyonline.cf"
             android:textColor="#829CD7"
             android:textSize="12sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
