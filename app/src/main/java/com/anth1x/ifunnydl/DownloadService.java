@@ -157,19 +157,9 @@ public class DownloadService extends IntentService {
             throw new RuntimeException(ex);
         }
     }
-    public void startTelemetry() {
-        SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
-        boolean doTelemetry = sharedPref.getBoolean("doTelemetry", Boolean.parseBoolean("false"));
-        if (false) { // this isnt gonna work cause of permissions. Keeping just in case I find a way to do it and want to reuse some code. Hoping that I will figure out why the app just sometimes doesn't want to work.
-            System.out.println("Writing log to " + teledestString);
-            Intent telintent = new Intent(this, LogWriterService.class);
-            telintent.putExtra(LogWriterService.EXTRA_DEST, teledestString);
-            startService(telintent);
-        }
-    }
+
     @Override
     protected void onHandleIntent(Intent intent) {
-        startTelemetry();
         SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
         imgAsiFunnyFormat = sharedPref.getBoolean("imgAsiFunnyFormat", Boolean.parseBoolean("true"));
         fileNamingScheme = sharedPref.getString("fileName", "iFunny");

@@ -17,7 +17,7 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.IFUNNYDL"
-        tools:targetApi="29">
+        tools:targetApi="23">
         <activity
             android:name=".DisplayHistoryActivity"
             android:exported="false" />
