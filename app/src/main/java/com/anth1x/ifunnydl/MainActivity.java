@@ -65,19 +65,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean checkPowerSaving() {
-        PowerManager powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
-        boolean powerSaveMode = powerManager.isPowerSaveMode();
-        System.out.println("Powersavemode = " + powerSaveMode);
+        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        boolean isPowerSaveMode = powerManager.isPowerSaveMode();
+        System.out.println("isPowerSaveMode = " + isPowerSaveMode);
 
-        boolean notBatOptimized = powerManager.isIgnoringBatteryOptimizations(getPackageName());
+        boolean isIgnoringBatteryOptimizations = powerManager.isIgnoringBatteryOptimizations(getPackageName());
         boolean isUnrestricted = true;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             isUnrestricted = !activityManager.isBackgroundRestricted();
         }
-        System.out.println("notBatOptimized = " + notBatOptimized + " isUnrestricted = " + isUnrestricted);
-        if (!notBatOptimized || !isUnrestricted) {
-            if (powerSaveMode) {
+        System.out.println("isIgnoringBatteryOptimizations = " + isIgnoringBatteryOptimizations + " isUnrestricted = " + isUnrestricted);
+
+        if (!isIgnoringBatteryOptimizations || !isUnrestricted) {
+            if (isPowerSaveMode) {
                 System.out.println("In power savings. Complaining");
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -88,10 +89,11 @@ public class MainActivity extends AppCompatActivity {
                 alert.show();
             }
         } else {
-            powerSaveMode = false;
+            isPowerSaveMode = false;
         }
-        return powerSaveMode;
+        return isPowerSaveMode;
     }
+
 
     public void startIntent(TextView sendButton, EditText inputURL, urlHistory history, Intent intent, String action, String type) {
         if (Intent.ACTION_SEND.equals(action) && type != null) {
