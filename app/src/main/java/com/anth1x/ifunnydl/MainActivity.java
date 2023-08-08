@@ -110,8 +110,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             isPowerSaveMode = false;
         }
-        isPowerSaveMode = false;
-        return false;
+        return isPowerSaveMode;
     }
 
 
