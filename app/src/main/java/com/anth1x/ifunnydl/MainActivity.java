@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean checkPowerSaving() {
         PowerManager powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
         boolean powerSaveMode = powerManager.isPowerSaveMode();
+        System.out.println("Powersavemode = " + powerSaveMode);
 
         boolean notBatOptimized = powerManager.isIgnoringBatteryOptimizations(getPackageName());
         boolean isUnrestricted = true;
@@ -86,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog alert = builder.create();
                 alert.show();
             }
+        } else {
+            powerSaveMode = false;
         }
         return powerSaveMode;
     }
