@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean checkPowerSaving() {
+        boolean finalDecision = true;
+
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
         boolean isPowerSaveMode = powerManager.isPowerSaveMode();
         System.out.println("isPowerSaveMode = " + isPowerSaveMode);
@@ -79,11 +81,13 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("isIgnoringBatteryOptimizations = " + isIgnoringBatteryOptimizations + " isUnrestricted = " + isUnrestricted);
 
         if (!isIgnoringBatteryOptimizations || !isUnrestricted) {
-            if (true) {
+            if (isPowerSaveMode) {
                 System.out.println("In power savings. Complaining");
 
                 SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
                 boolean showBatteryMessage = sharedPref.getBoolean("showBatteryMessage", true);
+
+                finalDecision = true;
 
                 if (showBatteryMessage) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -108,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         } else {
-            isPowerSaveMode = false;
+            finalDecision = false;
         }
-        return isPowerSaveMode;
+        return finalDecision;
     }
 
 
