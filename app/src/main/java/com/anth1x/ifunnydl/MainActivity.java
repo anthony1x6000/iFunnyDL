@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -78,20 +79,39 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("isIgnoringBatteryOptimizations = " + isIgnoringBatteryOptimizations + " isUnrestricted = " + isUnrestricted);
 
         if (!isIgnoringBatteryOptimizations || !isUnrestricted) {
-            if (isPowerSaveMode) {
+            if (true) {
                 System.out.println("In power savings. Complaining");
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("App doesn't work with Battery Saver enabled. Please disable or set app Battery Optimization to Unrestricted. Please see the GitHub repo for more details.")
-                        .setCancelable(false)
-                        .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
-                AlertDialog alert = builder.create();
-                alert.show();
+                SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
+                boolean showBatteryMessage = sharedPref.getBoolean("showBatteryMessage", true);
+
+                if (showBatteryMessage) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage("App doesn't work with Battery Saver enabled. Please disable or set app Battery Optimization to Unrestricted (recommended) or Optimized (sometimes breaks). Please see the GitHub repo for more details.")
+                            .setCancelable(false)
+                            .setPositiveButton("OK", (dialog, id) -> dialog.dismiss())
+                            .setNegativeButton("Never show again", (dialog, id) -> {
+                                new AlertDialog.Builder(this)
+                                        .setMessage("Are you sure you sure you never want to see this dialog again?")
+                                        .setCancelable(false)
+                                        .setPositiveButton("Yes", (dialog1, id1) -> {
+                                            SharedPreferences.Editor editor = sharedPref.edit();
+                                            editor.putBoolean("showBatteryMessage", false);
+                                            editor.apply();
+                                            dialog1.dismiss();
+                                        })
+                                        .setNegativeButton("No", (dialog1, id1) -> dialog.dismiss())
+                                        .show();
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
             }
         } else {
             isPowerSaveMode = false;
         }
-        return isPowerSaveMode;
+        isPowerSaveMode = false;
+        return false;
     }
 
 
