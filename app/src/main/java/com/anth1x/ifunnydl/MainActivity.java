@@ -110,10 +110,13 @@ public class MainActivity extends AppCompatActivity {
                     AlertDialog alert = builder.create();
                     alert.show();
                 }
+            } else {
+                finalDecision = false;
             }
         } else {
             finalDecision = false;
         }
+        System.out.println("Final descision, will the app ruN ??? (true is really bad)) " + finalDecision);
         return finalDecision;
     }
 
