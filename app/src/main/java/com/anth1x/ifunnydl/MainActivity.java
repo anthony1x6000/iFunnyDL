@@ -66,28 +66,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean checkPowerSaving() {
-        boolean finalDecision = true;
-
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
         boolean isPowerSaveMode = powerManager.isPowerSaveMode();
-        System.out.println("isPowerSaveMode = " + isPowerSaveMode);
-
         boolean isIgnoringBatteryOptimizations = powerManager.isIgnoringBatteryOptimizations(getPackageName());
         boolean isUnrestricted = true;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             isUnrestricted = !activityManager.isBackgroundRestricted();
         }
-        System.out.println("isIgnoringBatteryOptimizations = " + isIgnoringBatteryOptimizations + " isUnrestricted = " + isUnrestricted);
 
         if (!isIgnoringBatteryOptimizations || !isUnrestricted) {
             if (isPowerSaveMode) {
-                System.out.println("In power savings. Complaining");
-
                 SharedPreferences sharedPref = getSharedPreferences("my_preferences", MODE_PRIVATE);
                 boolean showBatteryMessage = sharedPref.getBoolean("showBatteryMessage", true);
-
-                finalDecision = true;
 
                 if (showBatteryMessage) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -110,15 +101,12 @@ public class MainActivity extends AppCompatActivity {
                     AlertDialog alert = builder.create();
                     alert.show();
                 }
-            } else {
-                finalDecision = false;
+                return true;
             }
-        } else {
-            finalDecision = false;
         }
-        System.out.println("Final descision, will the app ruN ??? (true is really bad)) " + finalDecision);
-        return finalDecision;
+        return false;
     }
+
 
 
     public void startIntent(TextView sendButton, EditText inputURL, urlHistory history, Intent intent, String action, String type) {
@@ -207,16 +195,15 @@ public class MainActivity extends AppCompatActivity {
         int statusBarHeight = getStatusBarHeight();
         int navigationBarHeight = getNavigationBarHeight();
         layout.setPadding(0, statusBarHeight, 0, navigationBarHeight);
-        if (checkPowerSaving() == false) {
-            Intent intent = getIntent();
-            String action = intent.getAction();
-            String type = intent.getType();
-            if (Intent.ACTION_SEND.equals(action) && type != null) {
-                System.out.println("it is!");
-                finishAffinity();
-            }
-            startIntent(sendButton, inputURL, history, intent, action, type);
+        checkPowerSaving();
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            System.out.println("it is!");
+            finishAffinity();
         }
+        startIntent(sendButton, inputURL, history, intent, action, type);
     }
 
     private void startDLService(String initShare) {
