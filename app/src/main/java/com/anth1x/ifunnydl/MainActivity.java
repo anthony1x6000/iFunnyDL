@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (showBatteryMessage) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage("App doesn't work with Battery Saver enabled. Please disable or set app Battery Optimization to Unrestricted (recommended) or Optimized (sometimes breaks). Please see the GitHub repo for more details.")
+                    builder.setMessage("App may not work with Battery Saver enabled. Please set 'App battery usage' to Optimized or Unrestricted (Android 12) OR 'Battery optimization' to Not Optimized (<Android 12) for this app. See the GitHub repo for more details.")
                             .setCancelable(false)
                             .setPositiveButton("OK", (dialog, id) -> dialog.dismiss())
                             .setNegativeButton("Never show again", (dialog, id) -> {
