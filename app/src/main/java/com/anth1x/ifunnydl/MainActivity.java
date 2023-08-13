@@ -82,7 +82,9 @@ public class MainActivity extends AppCompatActivity {
 
                 if (showBatteryMessage) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage("App may not work with Battery Saver enabled. Please set 'App battery usage' to Optimized or Unrestricted (Android 12) OR 'Battery optimization' to Not Optimized (<Android 12) for this app. See the GitHub repo for more details.")
+                    String batteryMessage = "App may not work with Battery Saver enabled. Please set 'App battery usage' to Unrestricted (Android 12) OR 'Battery optimization' to Not Optimized (<Android 12) for this app. See the GitHub repo for more details.";
+
+                    builder.setMessage(batteryMessage)
                             .setCancelable(false)
                             .setPositiveButton("OK", (dialog, id) -> dialog.dismiss())
                             .setNegativeButton("Never show again", (dialog, id) -> {
@@ -107,12 +109,12 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-
-
     public void startIntent(TextView sendButton, EditText inputURL, urlHistory history, Intent intent, String action, String type) {
         if (Intent.ACTION_SEND.equals(action) && type != null) {
-            System.out.println("Shared a link");
-            if ("text/plain".equals(type)) {
+            System.out.println("Started from share");
+            if ("text/plain".equals(type) && !checkPowerSaving()) {
+                finishAffinity();
+                System.out.println("Proceeding with share intent");
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
                 if (sharedText != null) {
                     System.out.println("shared text = " + sharedText);
@@ -123,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         } else {
-            System.out.println("Doing buttons");
+            System.out.println("Started from something else");
+            checkPowerSaving();
             sendButton.setOnClickListener(view -> {
                 initShare = inputURL.getText().toString();
                 if (!initShare.isEmpty() && initShare.contains("ifunny.co")) {
@@ -195,14 +198,9 @@ public class MainActivity extends AppCompatActivity {
         int statusBarHeight = getStatusBarHeight();
         int navigationBarHeight = getNavigationBarHeight();
         layout.setPadding(0, statusBarHeight, 0, navigationBarHeight);
-        checkPowerSaving();
         Intent intent = getIntent();
         String action = intent.getAction();
         String type = intent.getType();
-        if (Intent.ACTION_SEND.equals(action) && type != null) {
-            System.out.println("it is!");
-            finishAffinity();
-        }
         startIntent(sendButton, inputURL, history, intent, action, type);
     }
 
