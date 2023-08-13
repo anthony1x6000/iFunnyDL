@@ -41,7 +41,7 @@ The app may crash due to background battery restrictions such as having Battery 
     <th id="batusage">Battery Usage (&lt;Android 12)</th>
   </tr>
   <tr>
-    <td><a href="https://imgur.com/FpwwmSR"><img width=350 src="https://i.imgur.com/QxmFQfe.png" /></a><br>Optimized also works, usually.</td>
+    <td><a href="https://imgur.com/FpwwmSR"><img width=350 src="https://i.imgur.com/QxmFQfe.png" /></a><br>Optimized may work, but shows problems when sharing links to app.</td>
     <td><a href="https://imgur.com/pgZTq2J"><img width=350 src="https://i.imgur.com/BEIwnlW.png" /></a></td>
   </tr>
 </table>
