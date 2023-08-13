@@ -1,7 +1,6 @@
 package com.anth1x.ifunnydl;
 
 import static com.anth1x.ifunnydl.globalDefaults.GIFoutputDirectory;
-import static com.anth1x.ifunnydl.globalDefaults.teledestString;
 import static com.anth1x.ifunnydl.globalDefaults.tmpDest;
 
 import android.annotation.SuppressLint;
@@ -21,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 public class DownloadService extends IntentService {
 
