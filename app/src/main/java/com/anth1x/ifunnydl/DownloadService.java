@@ -1,7 +1,7 @@
 package com.anth1x.ifunnydl;
 
-import static com.anth1x.ifunnydl.globalDefaults.GIFoutputDirectory;
-import static com.anth1x.ifunnydl.globalDefaults.tmpDest;
+import static com.anth1x.ifunnydl.globalDefaults.iFunnyDIR;
+import static com.anth1x.ifunnydl.globalDefaults.iFunnyTMP;
 
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
@@ -51,63 +51,62 @@ public class DownloadService extends IntentService {
 
     public void downloadWith(String fileURL, int handleSend) {
         File dir = null;
-        String imgFileFormat;
+        String imageExtension;
         System.out.println("Starting fileURL = " + fileURL);
 
-        String fileName;
+        String fileName = getFileName();
         if (handleSend == 0) { // picture DIR
             int index = fileURL.lastIndexOf(".");
-            imgFileFormat = "." + fileURL.substring(index + 1);
-            System.out.println("imgFileFormat = " + imgFileFormat);
+            imageExtension = "." + fileURL.substring(index + 1);
+            System.out.println("imageExtension = " + imageExtension);
             if (imgAsiFunnyFormat) {
                 fileName = fileURL.replaceAll(".*/images/", "");
             } else {
-                fileName = (getFileName() + imgFileFormat);
+                fileName += imageExtension;
             }
             System.out.println("Finalname = " + fileName);
 
-            dir = tmpDest;
+            dir = iFunnyTMP;
             System.out.println("send to Directory = " + dir);
-        } else if (handleSend == 1) {
+        } else if (handleSend == 1) { // gif
             int index = fileURL.lastIndexOf(".");
-            imgFileFormat = "." + fileURL.substring(index + 1);
-            System.out.println("imgFileFormat = " + imgFileFormat);
+            imageExtension = "." + fileURL.substring(index + 1);
+            System.out.println("imageExtension = " + imageExtension);
             if (imgAsiFunnyFormat) {
                 fileName = fileURL.replaceAll(".*/images/", "");
             } else {
-                fileName = (getFileName() + imgFileFormat);
+                fileName += imageExtension;
             }
-            System.out.println("Finalname = " + fileName);
+            System.out.println("Final Name = " + fileName);
 
-            dir = GIFoutputDirectory;
+            dir = iFunnyDIR;
             System.out.println("send to Directory = " + dir);
         } else {
             // video DIR
-            fileName = (getFileName() + ".mp4");
-            System.out.println("Finalname = " + fileName);
+            fileName += ".mp4";
+            System.out.println("Final Name = " + fileName);
             String vidDest = "/iFunnyDL";
             dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + vidDest);
         }
-        System.out.println("fileURL before DM request = " + fileURL);
+
+        System.out.println("fileURL before download manager request = " + fileURL);
 
         File mediaFile = new File(dir, fileName);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(fileURL));
         request.setDestinationUri(Uri.fromFile(mediaFile));
-        if (DMNotif) {
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        }
+        if (DMNotif) request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
         DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
 
         System.out.println("Seemed to download well. Deleting temp directory for logs.");
-        CropService.deleteDirectory();
 
         if (handleSend == 0) {
-            System.out.println("sending to pictures. asking for fileListener");
+            System.out.println("Downloaded file is a picture. Asking for fileListener");
             Intent intent = new Intent(this, fileListener.class);
             startService(intent);
         }
+        CropService.deleteDirectory();
     }
 
     public void downloadMeth(String finalURL, int mHandle) {

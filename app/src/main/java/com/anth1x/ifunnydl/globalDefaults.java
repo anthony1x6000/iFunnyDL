@@ -5,12 +5,12 @@ import android.os.Environment;
 import java.io.File;
 
 public class globalDefaults {
-    public static final File tmpDest = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunnyTMP");
+    public static final File iFunnyTMP = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunnyTMP");
 
     public static final File teledest = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunnyDLTele");
 
-    static final File GIFoutputDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunny/");
-    public static final String tmpDestString = String.valueOf(tmpDest);
+    static final File iFunnyDIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunny/");
+    public static final String iFunnyTMPString = String.valueOf(iFunnyTMP);
     public static final String teledestString = String.valueOf(teledest);
 
 

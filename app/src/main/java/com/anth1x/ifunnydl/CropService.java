@@ -1,6 +1,6 @@
 package com.anth1x.ifunnydl;
 
-import static com.anth1x.ifunnydl.globalDefaults.tmpDest;
+import static com.anth1x.ifunnydl.globalDefaults.iFunnyTMP;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -24,15 +24,15 @@ public class CropService extends IntentService {
     }
 
     public static void deleteDirectory() {
-        if (tmpDest.isDirectory()) {
-            String[] children = tmpDest.list();
+        if (iFunnyTMP.isDirectory()) {
+            String[] children = iFunnyTMP.list();
             assert children != null;
             for (String child : children) {
-                new File(tmpDest, child).delete();
+                new File(iFunnyTMP, child).delete();
             }
         }
-        tmpDest.delete();
-        System.out.println("Deleted tmpDest");
+        iFunnyTMP.delete();
+        System.out.println("Deleted iFunnyTMP");
     }
 
     @Override
