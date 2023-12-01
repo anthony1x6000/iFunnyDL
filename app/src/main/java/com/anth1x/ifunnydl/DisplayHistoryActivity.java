@@ -10,14 +10,10 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.util.Linkify;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -28,14 +24,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -96,7 +87,7 @@ public class DisplayHistoryActivity extends AppCompatActivity {
 
         sendButton.setBackgroundColor(buttonBG);
         exportHistoryButton.setBackgroundColor(buttonBG);
-        
+
         sendButton.setOnClickListener(v -> {
             history.clearHistory();
             initTables();
