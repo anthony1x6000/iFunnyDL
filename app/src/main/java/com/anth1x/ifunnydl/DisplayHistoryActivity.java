@@ -7,10 +7,14 @@ import static com.anth1x.ifunnydl.fonts.fontTitle;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.util.Linkify;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -21,7 +25,14 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import com.google.gson.Gson;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -130,10 +141,30 @@ public class DisplayHistoryActivity extends AppCompatActivity {
 
     @SuppressLint({"SetTextI18n", "RtlHardcoded"})
     public void initTables() {
+
         urlHistory history = new urlHistory(this);
         urlTable.removeAllViews();
         timeTable.removeAllViews();
         List<UrlTime> urlTimes = history.getUrlTimes();
+
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(urlTimes);
+
+        File outputDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunnyDL");
+        if (!outputDirectory.exists()) {
+            Log.d("generic pr", "making pictures dir.");
+            outputDirectory.mkdirs();
+        }
+        File outputFile = new File(outputDirectory, "Download-Logs_Make-extension-txt.png");
+        try {
+            FileWriter writer = new FileWriter(outputFile);
+            writer.write(jsonString);
+            writer.close();
+            Log.d("generic print", "did print file?");
+        } catch (IOException e) {
+            Log.d("generic print", "did NOT print file");
+            Log.e("BADDD!!", String.valueOf(e));
+        }
 
         if (urlTimes.isEmpty()) {
             TableRow row = new TableRow(this);
