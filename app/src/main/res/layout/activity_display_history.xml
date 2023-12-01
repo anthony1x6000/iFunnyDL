@@ -66,6 +66,13 @@
                 android:gravity="center"
                 android:text="Clear history"
                 android:textColor="#fff" />
+            <TextView
+                android:id="@+id/exportHistoryButton"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="Export history to clipboard"
+                android:textColor="#fff" />
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -6,6 +6,9 @@ import static com.anth1x.ifunnydl.fonts.fontSubtitle;
 import static com.anth1x.ifunnydl.fonts.fontTitle;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -77,6 +80,7 @@ public class DisplayHistoryActivity extends AppCompatActivity {
         int buttonBG = Color.argb((int) (0.63 * 255), 17, 33, 59);
 
         TextView sendButton = findViewById(R.id.sendButton);
+        TextView exportHistoryButton = findViewById(R.id.exportHistoryButton);
         TextView bigTitle = findViewById(R.id.titlescool);
         TextView footer = findViewById(R.id.footer);
         TextView explain = findViewById(R.id.explain);
@@ -88,13 +92,17 @@ public class DisplayHistoryActivity extends AppCompatActivity {
         footer.setTypeface(fontBodyText);
         explain.setTypeface(fontSubtitle);  tableTitle.setTypeface(fontSubtitle);   tableTitleTimes.setTypeface(fontSubtitle);
         sendButton.setTypeface(fontButton);
+        exportHistoryButton.setTypeface(fontButton);
 
         sendButton.setBackgroundColor(buttonBG);
-
+        exportHistoryButton.setBackgroundColor(buttonBG);
+        
         sendButton.setOnClickListener(v -> {
             history.clearHistory();
             initTables();
         });
+
+        exportHistoryButton.setOnClickListener(v -> exportHistory());
 
         gotoother.setOnClickListener(v -> {
             Intent intent = new Intent(DisplayHistoryActivity.this, feelingLikeActivity.class);
@@ -139,32 +147,22 @@ public class DisplayHistoryActivity extends AppCompatActivity {
         });
     }
 
+    public void exportHistory() {
+        urlHistory history = new urlHistory(this);
+        List<UrlTime> urlTimes = history.getUrlTimes();
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(urlTimes);
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("label", jsonString);
+        clipboard.setPrimaryClip(clip);
+    }
+
     @SuppressLint({"SetTextI18n", "RtlHardcoded"})
     public void initTables() {
-
         urlHistory history = new urlHistory(this);
         urlTable.removeAllViews();
         timeTable.removeAllViews();
         List<UrlTime> urlTimes = history.getUrlTimes();
-
-        Gson gson = new Gson();
-        String jsonString = gson.toJson(urlTimes);
-
-        File outputDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/iFunnyDL");
-        if (!outputDirectory.exists()) {
-            Log.d("generic pr", "making pictures dir.");
-            outputDirectory.mkdirs();
-        }
-        File outputFile = new File(outputDirectory, "Download-Logs_Make-extension-txt.png");
-        try {
-            FileWriter writer = new FileWriter(outputFile);
-            writer.write(jsonString);
-            writer.close();
-            Log.d("generic print", "did print file?");
-        } catch (IOException e) {
-            Log.d("generic print", "did NOT print file");
-            Log.e("BADDD!!", String.valueOf(e));
-        }
 
         if (urlTimes.isEmpty()) {
             TableRow row = new TableRow(this);
