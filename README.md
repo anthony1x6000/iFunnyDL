@@ -32,7 +32,7 @@ The app may crash due to background battery restrictions such as having Battery 
     <th id="logs">Download Log</th>
   </tr>
   <tr>
-    <td><a href="https://imgur.com/Khg0cT8b"><img width=350 src="https://i.imgur.com/72w0sI0.png" /></a></td>
+    <td><a href="https://drive.filen.io/d/8a3e5164-52a9-4cde-aa6f-8a604aca492c#HreTa5Dz3fxzAuq2A9xRIPSLRMJmQbP2"><img width=350 src="https://i.imgur.com/72w0sI0.png" /></a></td>
     <td><a href="https://imgur.com/rsARcO0"><img width=350 src="https://i.imgur.com/UenbhS3.png" /></a></td>
     <td><img width=350 src="https://user-images.githubusercontent.com/33004321/229006556-282cc7de-42a0-48a4-858f-3fd06b46a06f.png" /></td>
   </tr>
