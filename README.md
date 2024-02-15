@@ -37,11 +37,11 @@ The app may crash due to background battery restrictions such as having Battery 
     <td><img width=350 src="https://user-images.githubusercontent.com/33004321/229006556-282cc7de-42a0-48a4-858f-3fd06b46a06f.png" /></td>
   </tr>
   <tr>
-    <th id="batusage">Battery Usage (Android 12)</th>
+    <th id="batusage">Battery Usage (&ge;Android 12)</th>
     <th id="batusage">Battery Usage (&lt;Android 12)</th>
   </tr>
   <tr>
-    <td><a href="https://imgur.com/FpwwmSR"><img width=350 src="https://i.imgur.com/QxmFQfe.png" /></a><br>Optimized may work, but shows problems when sharing links to app.</td>
+    <td><a href="https://drive.filen.io/d/69acd9bc-ca5e-49d0-acdc-895e1a2644f6#tcm3bEP6q8YAFJBUuCi6jlmkpxMY4Ehe"><img width=350 src="https://i.imgur.com/QxmFQfe.png" /></a><br>Optimized may work, but shows problems when sharing links to app.</td>
     <td><a href="https://imgur.com/pgZTq2J"><img width=350 src="https://i.imgur.com/BEIwnlW.png" /></a></td>
   </tr>
 </table>
